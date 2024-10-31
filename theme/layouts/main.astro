@@ -8,6 +8,7 @@ import Gallery from "../components/Gallery.astro";
 import GotoTopButton from "../components/ui/GotoTopButton.astro";
 import Modal from "../components/Modal.astro";
 import Map from "../components/Map.astro";
+import CodeInsert from "../components/CodeInsert.astro";
 import GoogleForm from "../components/GoogleForm.astro";
 import "../style/global.css";
 
@@ -441,6 +442,8 @@ const structuredData = generateStructuredData({
           return <GoogleForm content={content} section={section} />;
         } else if (section?.type === "textBlock") {
           return <TextBlock content={content} section={section} />;
+        }else if (section?.type === "codeInsert") {
+          return <CodeInsert section={section} />;
         }
       })
     }

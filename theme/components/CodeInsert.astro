@@ -1,0 +1,21 @@
+---
+const { section } = Astro.props;
+---
+
+{
+  section?.code?.map(
+    (code: { type: string; content: string }, index: number) => {
+      return (
+        <Fragment key={index}>
+          {code.type === "externalScript" ? (
+            <script src={code?.content.replace('src="', "").replace('"', "")} />
+          ) : code.type === "inlineScript" ? (
+            <script set:html={code?.content} />
+          ) : code.type === "html" ? (
+            <Fragment set:html={code?.content} />
+          ) : null}
+        </Fragment>
+      );
+    }
+  )
+}
