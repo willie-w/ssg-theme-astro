@@ -69,7 +69,11 @@ const { content } = Astro.props;
       id="menu"
     >
       <div class="cursor-pointer truncate">
-        <a href="/" class="flex items-center justify-center -m-1.5 p-1.5">
+        <a
+          href="/"
+          class="flex items-center justify-center -m-1.5 p-1.5"
+          aria-label="Go to homepage"
+        >
           <span class="sr-only">{content?.header?.title + "Logo"}</span>
           <img
             class={`hidden sm:block h-24 w-auto mr-3`}
@@ -117,6 +121,9 @@ const { content } = Astro.props;
                   <a
                     href={item?.link}
                     class="cursor-pointer hover:scale-125 ease-in-out transition-transform duration-300 text-lg font-semibold leading-6"
+                    aria-label={
+                      typeof item?.text === "string" ? item?.text : ""
+                    }
                   >
                     {item?.text}
                   </a>
