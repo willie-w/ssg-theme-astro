@@ -43,7 +43,7 @@ const { content, section } = Astro.props;
     }
     <h2
       class="mb-4 text-3xl font-bold sm:text-4xl"
-      style={`color:${section?.titleColor}`}
+      style={`color:${section?.titleColor};background-color:${section?.bgColor}`}
     >
       {
         section?.title?.map((line: string, index: number) => (
@@ -59,7 +59,7 @@ const { content, section } = Astro.props;
         <Fragment key={index}>
           <p
             class="text-lg leading-8 mt-8"
-            style={`color:${section?.descriptionColor}`}
+            style={`color:${section?.descriptionColor};background-color:${section?.bgColor}`}
           >
             {line}
           </p>
