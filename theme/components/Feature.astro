@@ -59,7 +59,7 @@ const { content, section } = Astro.props;
             <div class="text-center max-w-2xl sm:max-w-3xl">
               <h1
                 class={cn(
-                  "text-4xl font-bold sm:text-8xl block mt-4",
+                  "text-4xl font-bold sm:text-6xl block mt-4",
                   section?.isTextAlignCenter ? "text-center" : ""
                 )}
                 style={`color: ${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
@@ -207,7 +207,7 @@ const { content, section } = Astro.props;
               <div>
                 <h1
                   class={cn(
-                    "text-4xl font-bold  sm:text-8xl leading-12 block mt-4",
+                    "text-4xl font-bold  sm:text-6xl leading-12 block mt-4",
                     section?.isTextAlignCenter ? "text-center" : ""
                   )}
                   style={`color: ${section?.titleColor || "#000"};background-color:${section?.titleBgColor};padding:10px`}
@@ -330,7 +330,7 @@ const { content, section } = Astro.props;
                 <div>
                   <h1
                     class={cn(
-                      "mt-10 max-w-lg text-4xl font-bold sm:text-8xl block",
+                      "mt-10 max-w-lg text-4xl font-bold sm:text-6xl block",
                       section?.isTextAlignCenter
                         ? "text-center sm:text-left"
                         : ""
