@@ -76,6 +76,7 @@ const { content, section } = Astro.props;
                       section?.isTextAlignCenter ? "text-center" : ""
                     )}
                     style={`color: ${section?.descriptionColor}`}
+                    role="heading"
                   >
                     {info}
                   </p>
@@ -225,6 +226,7 @@ const { content, section } = Astro.props;
                         section?.isTextAlignCenter ? "text-center" : ""
                       )}
                       style={`color: ${section?.descriptionColor}`}
+                      role="heading"
                     >
                       {info}
                     </p>
@@ -336,6 +338,7 @@ const { content, section } = Astro.props;
                         : ""
                     )}
                     style={`color:${section?.titleColor};`}
+                    role="heading"
                   >
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>{line}</Fragment>
