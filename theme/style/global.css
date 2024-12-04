@@ -1235,17 +1235,33 @@
   }
 }
 
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  padding: 10px;
-  background-color: #000;
-  color: #fff;
-  text-decoration: none;
+.skip-links {
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 2147483647;
 }
-
-.skip-link:focus {
-  top: 10px;
-  background-color: #007bff;
+.skip-link {
+  min-width: 200px;
+  position: fixed;
+  top: 50px;
+  left: 20px;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  background-color: rgb(255, 255, 255);
+  color: rgb(31, 37, 51);
+  font-size: 16px;
+  text-shadow: rgb(39, 39, 45) 0px 0px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2147483647;
+  font-family: Arial, Helvetica, sans-serif;
+  direction: ltr;
+  border: 3px solid rgba(19, 110, 248, 0.8);
+  outline: rgb(99, 154, 249) solid 0px;
+  box-shadow: rgba(19, 110, 248, 0.3) 0px 0px 0px 5px;
+  transition: top 0.22s;
 }
