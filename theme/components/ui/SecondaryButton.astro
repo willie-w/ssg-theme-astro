@@ -4,15 +4,32 @@ import { cn } from "../../utils/cn";
 const { content, text, href, backgroundColor } = Astro.props;
 ---
 
-<a
-  href={href}
-  class={cn(
-    "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
-    `${content?.secondaryColorScheme === "dark" ? "text-white" : "text-black"}`
-  )}
-  style={`background-color:${backgroundColor ? backgroundColor : content?.secondaryColor};`}
-  target="_blank"
-  aria-label="Open the menu in a new tab"
->
-  {text}
-</a>
+{
+  text?.includes("Tel:") ? (
+    <div
+      class={cn(
+        "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
+        `${content?.secondaryColorScheme === "dark" ? "text-white" : "text-black"}`
+      )}
+      style={`background-color:${backgroundColor ? backgroundColor : content?.secondaryColor};`}
+    >
+      Tel:
+      <a target="_blank" aria-label="Open the menu in a new tab" href={href}>
+        {text.replace("Tel:", "").trim()}
+      </a>
+    </div>
+  ) : (
+    <a
+      href={href}
+      class={cn(
+        "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
+        `${content?.secondaryColorScheme === "dark" ? "text-white" : "text-black"}`
+      )}
+      style={`background-color:${backgroundColor ? backgroundColor : content?.secondaryColor};`}
+      target="_blank"
+      aria-label="Open the menu in a new tab"
+    >
+      {text}
+    </a>
+  )
+}

@@ -32,7 +32,7 @@ const { content, section, isChildComponent } = Astro.props;
             text={
               section?.telInsteadText
                 ? section?.telInsteadText
-                : `tel: ${content?.tel}`
+                : `Tel: ${content?.tel}`
             }
             href={`tel:${section?.telTrackingNum ? section?.telTrackingNum : content?.trackingNum ? content?.trackingNum : content?.tel}`}
             id="mapTelBtn"
