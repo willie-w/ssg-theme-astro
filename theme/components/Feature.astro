@@ -62,7 +62,7 @@ const { content, section } = Astro.props;
                   "text-4xl font-bold sm:text-8xl block mt-4",
                   section?.isTextAlignCenter ? "text-center" : ""
                 )}
-                style={`color: ${section?.titleColor}`}
+                style={`color: ${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
               >
                 {section?.title.map((line: string, index: number) => (
                   <Fragment key={index}>{line}</Fragment>
@@ -210,7 +210,7 @@ const { content, section } = Astro.props;
                     "text-4xl font-bold  sm:text-8xl leading-12 block mt-4",
                     section?.isTextAlignCenter ? "text-center" : ""
                   )}
-                  style={`color: ${section?.titleColor || "#000"}`}
+                  style={`color: ${section?.titleColor || "#000"};background-color:${section?.titleBgColor};padding:10px`}
                 >
                   {section?.title.map((line: string, index: number) => (
                     <Fragment key={index}>{line}</Fragment>
@@ -335,7 +335,7 @@ const { content, section } = Astro.props;
                         ? "text-center sm:text-left"
                         : ""
                     )}
-                    style={`color:${section?.titleColor};`}
+                    style={`color:${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
                   >
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>{line}</Fragment>
@@ -415,7 +415,7 @@ const { content, section } = Astro.props;
                         ? "text-center sm:text-left"
                         : "text-left"
                     )}
-                    style={`color:${section?.titleColor};`}
+                    style={`color:${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
                   >
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>
