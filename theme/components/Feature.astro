@@ -6,6 +6,16 @@ import Map from "./Map.astro";
 import { cn } from "../utils/cn";
 
 const { content, section } = Astro.props;
+function hexToRgb(hex:string) {
+  const parsedHex = hex.replace("#", "");
+  
+  const bigint = parseInt(parsedHex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `${r}, ${g}, ${b}`;
+}
 ---
 
 <section
@@ -59,11 +69,13 @@ const { content, section } = Astro.props;
             <div class="text-center max-w-2xl sm:max-w-3xl">
               <h1
                 class={cn(
-                  "text-4xl font-bold sm:text-6xl block mt-4",
+                  "text-4xl font-bold sm:text-6xl block mt-4 sm:p-4",
                   section?.isTextAlignCenter ? "text-center" : ""
                 )}
-                style={`color: ${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
-              >
+                style={`
+  color: ${section?.titleColor || "inherit"};
+  background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
+`} >
                 {section?.title.map((line: string, index: number) => (
                   <Fragment key={index}>{line}</Fragment><br/>
                 ))}
@@ -207,11 +219,14 @@ const { content, section } = Astro.props;
               <div>
                 <h1
                   class={cn(
-                    "text-4xl font-bold  sm:text-6xl leading-12 block mt-4",
+                    "text-4xl font-bold  sm:text-6xl leading-12 block mt-4 sm:p-4",
                     section?.isTextAlignCenter ? "text-center" : ""
                   )}
-                  style={`color: ${section?.titleColor || "#000"};background-color:${section?.titleBgColor};padding:10px`}
-                >
+                  style={`
+  color: ${section?.titleColor || "inherit"};
+  background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0});
+
+`}                >
                   {section?.title.map((line: string, index: number) => (
                     <Fragment key={index}>{line}</Fragment><br/>
                   ))}
@@ -330,13 +345,15 @@ const { content, section } = Astro.props;
                 <div>
                   <h1
                     class={cn(
-                      "mt-10 max-w-lg text-4xl font-bold sm:text-6xl block",
+                      "mt-10 max-w-lg text-4xl font-bold sm:text-6xl block sm:p-4",
                       section?.isTextAlignCenter
                         ? "text-center sm:text-left"
                         : ""
                     )}
-                    style={`color:${section?.titleColor};background-color:${section?.titleBgColor};padding:10px`}
-                  >
+                    style={`
+  color: ${section?.titleColor || "inherit"};
+  background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
+`}                  >
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>{line}</Fragment><br/>
                     ))}
