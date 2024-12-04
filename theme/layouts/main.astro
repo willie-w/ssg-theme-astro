@@ -412,6 +412,7 @@ const structuredData = generateStructuredData({
         <!-- end of structured data -->
   </head>
   <body>
+
     <!-- Google Tag Manager (noscript) -->
      {tag?
     <noscript
@@ -425,7 +426,9 @@ const structuredData = generateStructuredData({
     <!-- End Google Tag Manager (noscript) -->
 
     {content?.header && <Header content={content} />}
-
+    <a href="#maincontent" class="skip-link">Skip to main content</a>
+    <a href="#footer" class="skip-link">Skip to footer</a>
+    <main id="maincontent">
     {
       content?.sections?.map((section: { type: string }) => {
         if (section?.type === "feature" || section?.type === "hero") {
@@ -447,6 +450,7 @@ const structuredData = generateStructuredData({
         }
       })
     }
+    </main>
     {content?.footer && <Footer content={content} />}
 
     <GotoTopButton content={content} />

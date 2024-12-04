@@ -11,6 +11,7 @@ const currentYear = new Date().getFullYear();
     "relative scroll-mt-100 sm:scroll-mt-150",
     content?.footer?.noMarginTop ? "mt-0" : "mt-16 sm:mt-24 md:mt-32"
   )}
+  id="footer"
 >
   {
     content?.footer?.bgImg ? (
@@ -102,7 +103,11 @@ const currentYear = new Date().getFullYear();
             (item: { url: string; address: string }, index: number) => (
               <Fragment key={index}>
                 <div>
-                  <a target="_blank" href={item?.url}>
+                  <a
+                    target="_blank"
+                    aria-label="Open the menu in a new tab"
+                    href={item?.url}
+                  >
                     {item?.address}
                   </a>
                 </div>
