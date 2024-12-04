@@ -246,7 +246,8 @@ const structuredData = generateStructuredData({
 
 ---
 
-<html lang={content?.seo?.locale}>
+<!-- <html lang={content?.seo?.locale}> -->
+  <html lang={content?.seo?.locale?.replace('_', '-')}>
   <head>
     <!-- Google Tag Manager -->
      {tag?

@@ -15,9 +15,7 @@ const { content, section } = Astro.props;
   style="scroll-margin-top: 150px;"
 >
   <div class="mx-auto max-w-2xl pb-8">
-    <h2
-      class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center"
-    >
+    <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
       {
         section?.title?.map((line: string, index: number) => (
           <Fragment key={index}>
