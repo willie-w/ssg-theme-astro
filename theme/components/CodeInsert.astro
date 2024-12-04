@@ -8,7 +8,9 @@ const { section } = Astro.props;
       return (
         <Fragment key={index}>
           {code.type === "externalScript" ? (
-            <script src={code?.content.replace('src="', "").replace('"', "")} />
+            <script
+              src={code?.content?.replace('src="', "")?.replace('"', "")}
+            />
           ) : code.type === "inlineScript" ? (
             <script set:html={code?.content} />
           ) : code.type === "html" ? (

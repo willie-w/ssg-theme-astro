@@ -7,7 +7,7 @@ import { cn } from "../utils/cn";
 
 const { content, section } = Astro.props;
 function hexToRgb(hex:string) {
-  const parsedHex = hex.replace("#", "");
+  const parsedHex = hex?.replace("#", "");
   
   const bigint = parseInt(parsedHex, 16);
   const r = (bigint >> 16) & 255;

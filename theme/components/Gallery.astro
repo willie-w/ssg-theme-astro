@@ -54,9 +54,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                         {item?.name.split("__").map((part) => (
                           <span>
                             {part
-                              .replace(/_/g, " ")
-                              .replace(/w:/g, "w/")
-                              .replace(/w:o/g, "w/o")}
+                              ?.replace(/_/g, " ")
+                              ?.replace(/w:/g, "w/")
+                              ?.replace(/w:o/g, "w/o")}
                             <br />
                             <br />
                           </span>
@@ -117,9 +117,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                       {item?.name.split("__").map((part) => (
                         <span>
                           {part
-                            .replace(/_/g, " ")
-                            .replace(/w:/g, "w/")
-                            .replace(/w:o/g, "w/o")}
+                            ?.replace(/_/g, " ")
+                            ?.replace(/w:/g, "w/")
+                            ?.replace(/w:o/g, "w/o")}
                           <br />
                           <br />
                         </span>
@@ -179,9 +179,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                       {item?.name.split("__").map((part) => (
                         <span>
                           {part
-                            .replace(/_/g, " ")
-                            .replace(/w:/g, "w/")
-                            .replace(/w:o/g, "w/o")}
+                            ?.replace(/_/g, " ")
+                            ?.replace(/w:/g, "w/")
+                            ?.replace(/w:o/g, "w/o")}
                           <br />
                         </span>
                       ))}

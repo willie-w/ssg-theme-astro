@@ -16,10 +16,10 @@ const { content, text, href, backgroundColor } = Astro.props;
       Tel:
       <a
         target="_blank"
-        aria-label={`Call ${text.replace("Tel:", "").trim()}`}
+        aria-label={`Call ${text?.replace("Tel:", "").trim()}`}
         href={href}
       >
-        {text.replace("Tel:", "").trim()}
+        {text?.replace("Tel:", "").trim()}
       </a>
     </div>
   ) : (
