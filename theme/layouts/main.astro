@@ -243,6 +243,7 @@ const structuredData = generateStructuredData({
   hasMenuSection: content?.seo?.hasMenuSection,
   offers: content?.seo?.offers 
 });
+let fullscreenImg = null;
 
 ---
 
@@ -463,5 +464,51 @@ const structuredData = generateStructuredData({
       src="https://www.fbgcdn.com/embedder/js/ewm2.js"
       defer
       async></script> -->
+
+      <!-- gallery modal -->
+  <div
+  id="fullscreen-modal"
+  class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 items-center justify-center"
+>
+  <button
+    id="close-button"
+    class="absolute top-4 right-4 text-white text-4xl font-bold z-60"
+  >
+    &times;
+  </button>
+  <img
+    src={fullscreenImg}
+    alt="Fullscreen"
+    class="max-w-full max-h-full object-contain"
+  />
+</div>
+<script>
+  const modal = document.getElementById("fullscreen-modal");
+  const closeButton = document.getElementById("close-button");
+  const images = document.querySelectorAll("[data-src]");
+
+  // Open fullscreen
+  images.forEach((image) => {
+    image.addEventListener("click", () => {
+      const imgSrc = image.getAttribute("data-src");
+      if (!modal || !imgSrc) return;
+
+      modal.style.display = "flex";
+      const fullscreenImg = modal.querySelector("img");
+      if (fullscreenImg) fullscreenImg.src = imgSrc;
+    });
+  });
+
+  // Close fullscreen
+  if (closeButton) {
+    closeButton.addEventListener("click", () => {
+      if (!modal) return;
+      modal.style.display = "none";
+      const fullscreenImg = modal.querySelector("img");
+      if (fullscreenImg) fullscreenImg.src = ""; // clear image
+    });
+  }
+</script>
+<!-- end of modal -->
   </body>
 </html>

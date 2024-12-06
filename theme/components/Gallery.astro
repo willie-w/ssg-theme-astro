@@ -40,8 +40,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     <img
                       src={item?.src?.replace("/public", "")}
                       alt={item?.name}
-                      class="absolute inset-0 -z-10 h-full w-full object-cover"
+                      class="absolute inset-0 -z-10 h-full w-full object-cover object-contain cursor-pointer"
                       loading="lazy"
+                      data-src={item?.src}
                     />
                   </div>
                   {section?.showImgName ? (
@@ -75,7 +76,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
     )
   }
 
-  {
+  <!-- {
     section?.mode === 2 && (
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -109,8 +110,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                   <img
                     src={item?.src?.replace("/public", "")}
                     alt={item?.name}
-                    class={`mx-auto h-48 w-48 md:h-56 md:w-56 rounded-full object-cover hover:scale-105 duration-300`}
+                    class={`mx-auto h-48 w-48 md:h-56 md:w-56 rounded-full object-cover hover:scale-105 duration-300 object-contain cursor-pointer`}
                     loading="lazy"
+                    data-src={item?.src}
                   />
                   {section?.showImgName ? (
                     <div class="mt-6 text-base font-semibold leading-7  text-white text-center">
@@ -135,7 +137,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
         </div>
       </div>
     )
-  }
+  } -->
 
   {
     section?.mode === 3 && (
@@ -168,8 +170,9 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                   <img
                     src={item?.src?.replace("/public", "")}
                     alt={item?.name}
-                    class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300`}
+                    class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain cursor-pointer`}
                     loading="lazy"
+                    data-src={item?.src}
                   />
                   {section?.showImgName ? (
                     <div
@@ -193,6 +196,70 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
               </Fragment>
             ))}
           </ul>
+        </div>
+      </div>
+    )
+  }
+  {
+    section?.mode === 2 && (
+      <div style={`background-color:${section?.bgColor}`}>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl">
+            <h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
+              {section?.title?.map((line: string, index: number) => (
+                <Fragment key={index}>
+                  <span class="block leading-16">{line}</span>
+                </Fragment>
+              ))}
+            </h2>
+
+            {section?.description?.map((info: string, index: number) => (
+              <Fragment key={index}>
+                <p class="mt-4 text-lg leading-8 text-gray-600 text-center">
+                  {info}
+                </p>
+              </Fragment>
+            ))}
+          </div>
+          <div class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 lg:grid-cols-2 gap-16 sm:mt-20 lg:mx-0 lg:max-w-none text-center">
+            {images?.map((item, index) => (
+              <Fragment key={index}>
+                <div>
+                  <div class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900">
+                    <img
+                      src={item?.src?.replace("/public", "")}
+                      alt={item?.name}
+                      class="w-full object-contain object-contain cursor-pointer"
+                      loading="lazy"
+                      data-src={item?.src}
+                    />
+                  </div>
+                  {section?.showImgName ? (
+                    <div
+                      class="mt-3 text-lg leading-6 text-shadow-all shadow-gray-100"
+                      style={`color: ${section?.imgNameColor}`}
+                    >
+                      <span class="text-center">
+                        <span class="absolute inset-0" />
+                        {item?.name.split("__").map((part, subIndex) => (
+                          <Fragment key={subIndex}>
+                            {part
+                              ?.replace(/_/g, " ")
+                              ?.replace(/w:/g, "w/")
+                              ?.replace(/w:o/g, "w/o")}
+                            <br />
+                            <br />
+                          </Fragment>
+                        ))}
+                      </span>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </Fragment>
+            ))}
+          </div>
         </div>
       </div>
     )
