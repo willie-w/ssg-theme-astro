@@ -495,7 +495,7 @@ let fullscreenImg = null;
 
       modal.style.display = "flex";
       const fullscreenImg = modal.querySelector("img");
-      if (fullscreenImg) fullscreenImg.src = imgSrc;
+      if (fullscreenImg) fullscreenImg.src = imgSrc?.replace("/public", "");
     });
   });
 
