@@ -312,12 +312,15 @@ const currentYear = new Date().getFullYear();
       )
     }
 
-    <p class="mt-10 text-center text-xs leading-5 text-black">
+    <p
+      class="mt-10 text-center text-xs leading-5 text-black"
+      style={content?.footer?.textColor
+        ? `color:${content?.footer?.textColor}`
+        : `color:#ffffff`}
+    >
       &copy; {currentYear}
-      {content?.title?.replace(" - Best Food Today", "")} - <a
-        href="https://bestfood.today/"
-        >BEST FOOD TODAY
-      </a>All rights reserved.
+      {content?.title?.replace(" - Best Food Today", "")} All rights reserved. Created
+      by <a href="https://bestfood.today/">BEST FOOD TODAY </a>.
     </p>
   </div>
 </footer>
