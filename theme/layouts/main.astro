@@ -539,7 +539,6 @@ let fullscreenImg = null;
   const overlay = document.getElementById("feedback-overlay");
   const closeButton = document.getElementById("closeFeedbackModal");
   const sendFeedbackButton = document.getElementById("send-feedback-btn");
-  const sendButton = document.querySelector("button[type='submit']");
  
   function closeFeedbackModal() {
     modal?.classList.remove("show");
@@ -551,12 +550,6 @@ let fullscreenImg = null;
   }
 
   closeButton?.addEventListener("click", closeFeedbackModal);
-
-  sendButton?.addEventListener("click", () => {
-   
-    closeFeedbackModal();
-    alert("Thank you for your feedback!"); 
-  });
   
   overlay?.addEventListener("click", closeFeedbackModal);
 
