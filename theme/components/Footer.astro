@@ -1,11 +1,13 @@
 ---
 import PaymentMethod from "./paymentMethod.astro";
 import { cn } from "../utils/cn";
+import FeedbackFormModal from "./FeedbackFormModal.astro";
 
 const { content } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
 
+<FeedbackFormModal />
 <footer
   class={cn(
     "relative scroll-mt-100 sm:scroll-mt-150",
@@ -313,9 +315,18 @@ const currentYear = new Date().getFullYear();
         ""
       )
     }
-
     <p
-      class="mt-10 text-center text-xs leading-5 text-black"
+      class="mt-10 text-center text-xs leading-5"
+      style={content?.footer?.textColor
+        ? `color:${content?.footer?.textColor}`
+        : `color:#ffffff`}
+    >
+      <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | <a
+        href="/accessibility">Accessibility</a
+      > | <a id="send-feedback-btn" class="cursor-pointer">Send feedback</a>
+    </p>
+    <p
+      class="mt-2 text-center text-xs leading-5"
       style={content?.footer?.textColor
         ? `color:${content?.footer?.textColor}`
         : `color:#ffffff`}

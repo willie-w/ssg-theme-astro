@@ -72,7 +72,7 @@ const { content } = Astro.props;
         <a
           href="/"
           class="flex items-center justify-center -m-1.5 p-1.5"
-          aria-label="Go to homepage"
+          aria-label={content?.title + " logo, click to go to home."}
         >
           <span class="sr-only">{content?.header?.title + "Logo"}</span>
           <img

@@ -1,0 +1,44 @@
+---
+const { content } = Astro.props;
+---
+
+<div class="bg-white py-12">
+  <div class="mx-auto max-w-6xl lg:px-8">
+    <div class="bg-white px-6 py-16 sm:py-32 lg:px-8">
+      <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+        <h1
+          class="mt-2 text-3xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl"
+        >
+          Accessibility
+        </h1>
+        <!-- 1 -->
+        <p class="mt-6">
+          We are dedicated to ensuring equal access to goods and services for
+          all individuals. As part of this commitment, we continuously work to
+          enhance the accessibility of our website and apps, making them more
+          user-friendly for people with disabilities and everyone else.
+        </p>
+        <!-- 2 -->
+        <p class="mt-6">
+          Presently, we are integrating aspects of the World Wide Web
+          Consortium's Web Content Accessibility Guidelines 2.0 Level AA (WCAG
+          2.0 AA) as our standard for web accessibility.
+        </p>
+        <!-- 3 -->
+        <p class="mt-6">
+          Your feedback regarding the accessibility of our services is highly
+          valued. If you encounter any accessibility barriers while using our
+          website or apps, please don't hesitate to let us know. We deeply
+          appreciate your insights as we endeavor to create an inclusive
+          experience for all users.
+        </p>
+
+        <div class="mt-6">
+          <p>{content?.title}</p>
+
+          <p>{content?.tel ? "Tel: +1-" + content?.tel : ""}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

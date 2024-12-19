@@ -1,0 +1,161 @@
+---
+import { sendEmail } from "../utils/sendEmail";
+import type { SendEmailParams } from "../utils/sendEmail";
+
+const handleSubmit = async (event: {
+  preventDefault: () => void;
+  target: HTMLFormElement | undefined;
+}): Promise<void> => {
+  event.preventDefault(); // Prevent default form submission behavior
+
+  // Get form data
+  const formData = new FormData(event.target);
+
+  // Prepare the email data
+  const emailData: SendEmailParams = {
+    message: formData.get("message") as string,
+  };
+
+  try {
+    const result = await sendEmail(emailData); // Send email using the utility
+    if (result) {
+      console.log("Email sent successfully.");
+    } else {
+      console.error("Failed to send email.");
+    }
+  } catch (error) {
+    console.error("An error occurred while sending the message:", error);
+  }
+};
+---
+
+<style>
+  .promo-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 450px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 1001;
+    display: none; /* 初始為隱藏 */
+  }
+
+  .promo-modal.show {
+    display: block; /* 顯示模態框 */
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: none; /* 初始為隱藏 */
+  }
+
+  .overlay.show {
+    display: block; /* 顯示遮罩層 */
+  }
+</style>
+
+<form on-submit={handleSubmit}>
+  <div id="overlay" class="overlay"></div>
+  <div id="promoModal" class="promo-modal rounded-lg">
+    <div class="flex justify-end">
+      <button
+        id="closeModal"
+        class="text-right"
+        style="color: #333; border: none; cursor: pointer; font-size: 13px;"
+        aria-label="close Modal"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg></button
+      >
+    </div>
+    <p>
+      <div>
+        <div class="col-span-full">
+          <label
+            html-for="about"
+            class="block text-lg font-medium text-gray-900"
+          >
+            Describe your feedback
+          </label>
+          <div class="mt-2">
+            <textarea
+              id="about"
+              name="about"
+              rows={3}
+              class="block w-full rounded-md border border-gray-600 px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-600 placeholder:text-gray-400 focus:outline-blue-600"
+              default-value={""}
+              placeholder="Your feedback helps us improve. Write your comments here."
+            ></textarea>
+          </div>
+          <p class="mt-3 text-sm/6 text-gray-500">
+            Please don’t include any sensitive information.
+          </p>
+        </div>
+
+        <div
+          style="margin: 25px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;"
+        >
+          <button
+            type="submit"
+            class="rounded-full px-10 py-1.5 text-lg shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center bg-gray-700 text-white"
+            >Send</button
+          >
+        </div>
+      </div>
+    </p>
+  </div>
+</form>
+<script>
+  // 獲取相關元素
+  const modal = document.getElementById("promoModal");
+  const overlay = document.getElementById("overlay");
+  const closeButton = document.getElementById("closeModal");
+  const sendFeedbackButton = document.getElementById("send-feedback-btn");
+  const sendButton = document.querySelector("button[type='submit']");
+
+  // 關閉模態框的函數
+  function closeModal() {
+    modal?.classList.remove("show");
+    overlay?.classList.remove("show");
+  }
+  function openModal() {
+    modal?.classList.add("show");
+    overlay?.classList.add("show");
+  }
+
+  // 點擊叉號關閉
+  closeButton?.addEventListener("click", closeModal);
+
+  // 點擊 Send 按鈕關閉
+  sendButton?.addEventListener("click", (e) => {
+    e.preventDefault(); // 如果需要提交表單，移除此行
+    closeModal();
+    alert("Thank you for your feedback!"); // 顯示確認訊息
+  });
+
+  // 點擊遮罩關閉
+  overlay?.addEventListener("click", closeModal);
+
+  sendFeedbackButton?.addEventListener("click", openModal);
+</script>
