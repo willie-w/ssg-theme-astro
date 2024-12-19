@@ -4,29 +4,21 @@ import { cn } from "../utils/cn";
 import { sendEmail } from "../utils/sendEmail";
 import type { SendEmailParams } from "../utils/sendEmail";
 
-const handleSubmit = async (event: {
-  preventDefault: () => void;
-  target: HTMLFormElement | undefined;
-}): Promise<void> => {
-  event.preventDefault(); // Prevent default form submission behavior
+const handleSubmit = async (event: Event) => {
+  event.preventDefault(); // 防止表單默認提交
+  console.log("Form submitted");
 
-  // Get form data
-  const formData = new FormData(event.target);
+  const formData = new FormData(event.target as HTMLFormElement);
 
-  // Prepare the email data
   const emailData: SendEmailParams = {
     message: formData.get("message") as string,
   };
 
   try {
-    const result = await sendEmail(emailData); // Send email using the utility
-    if (result) {
-      console.log("Email sent successfully.");
-    } else {
-      console.error("Failed to send email.");
-    }
+    await sendEmail(emailData);
+    console.log("Email sent successfully.");
   } catch (error) {
-    console.error("An error occurred while sending the message:", error);
+    console.error("Error sending email:", error);
   }
 };
 
@@ -47,11 +39,11 @@ const currentYear = new Date().getFullYear();
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 1001;
-    display: none; /* 初始為隱藏 */
+    display: none;
   }
 
   .feedback-modal.show {
-    display: block; /* 顯示模態框 */
+    display: block;
   }
 
   .overlay {
@@ -62,11 +54,11 @@ const currentYear = new Date().getFullYear();
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 1000;
-    display: none; /* 初始為隱藏 */
+    display: none;
   }
 
   .overlay.show {
-    display: block; /* 顯示遮罩層 */
+    display: block;
   }
 </style>
 
@@ -111,19 +103,14 @@ const currentYear = new Date().getFullYear();
               rows={3}
               class="block w-full rounded-md border border-gray-600 px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-600 placeholder:text-gray-400 focus:outline-blue-600"
               default-value={""}
-              placeholder="Your feedback helps us improve. Write your comments here."
-            ></textarea>
+              placeholder="Your feedback helps us improve. "></textarea>
           </div>
-          <p class="mt-3 text-sm/6 text-gray-500">
-            Please don’t include any sensitive information.
-          </p>
         </div>
 
         <div
           style="margin: 25px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
           <button
-            type="submit"
             class="rounded-full px-10 py-1.5 text-lg shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center bg-gray-700 text-white"
             >Send</button
           >

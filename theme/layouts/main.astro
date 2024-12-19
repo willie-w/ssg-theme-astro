@@ -544,7 +544,7 @@ let fullscreenImg = null;
     modal?.classList.remove("show");
     overlay?.classList.remove("show");
   }
-  function openModal() {
+  function openFeedbackModal() {
     modal?.classList.add("show");
     overlay?.classList.add("show");
   }
@@ -553,7 +553,7 @@ let fullscreenImg = null;
   
   overlay?.addEventListener("click", closeFeedbackModal);
 
-  sendFeedbackButton?.addEventListener("click", openModal);
+  sendFeedbackButton?.addEventListener("click", openFeedbackModal);
 </script>
 <!-- end of feedback modal -->
   </body>
