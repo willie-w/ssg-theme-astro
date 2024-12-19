@@ -36,7 +36,7 @@ const currentYear = new Date().getFullYear();
 
 <!-- feedback form -->
 <style>
-  .promo-modal {
+  .feedback-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -50,7 +50,7 @@ const currentYear = new Date().getFullYear();
     display: none; /* 初始為隱藏 */
   }
 
-  .promo-modal.show {
+  .feedback-modal.show {
     display: block; /* 顯示模態框 */
   }
 
@@ -71,11 +71,11 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <form on-submit={handleSubmit}>
-  <div id="overlay" class="overlay"></div>
-  <div id="promoModal" class="promo-modal rounded-lg">
+  <div id="feedback-overlay" class="overlay"></div>
+  <div id="feedbackModal" class="feedback-modal rounded-lg">
     <div class="flex justify-end">
       <button
-        id="closeModal"
+        id="closeFeedbackModal"
         class="text-right"
         style="color: #333; border: none; cursor: pointer; font-size: 13px;"
         aria-label="close Modal"
@@ -134,14 +134,14 @@ const currentYear = new Date().getFullYear();
 </form>
 <script>
   // 獲取相關元素
-  const modal = document.getElementById("promoModal");
-  const overlay = document.getElementById("overlay");
-  const closeButton = document.getElementById("closeModal");
+  const modal = document.getElementById("feedbackModal");
+  const overlay = document.getElementById("feedback-overlay");
+  const closeButton = document.getElementById("closeFeedbackModal");
   const sendFeedbackButton = document.getElementById("send-feedback-btn");
   const sendButton = document.querySelector("button[type='submit']");
 
   // 關閉模態框的函數
-  function closeModal() {
+  function closeFeedbackModal() {
     modal?.classList.remove("show");
     overlay?.classList.remove("show");
   }
@@ -151,17 +151,17 @@ const currentYear = new Date().getFullYear();
   }
 
   // 點擊叉號關閉
-  closeButton?.addEventListener("click", closeModal);
+  closeButton?.addEventListener("click", closeFeedbackModal);
 
   // 點擊 Send 按鈕關閉
   sendButton?.addEventListener("click", (e) => {
     e.preventDefault(); // 如果需要提交表單，移除此行
-    closeModal();
+    closeFeedbackModal();
     alert("Thank you for your feedback!"); // 顯示確認訊息
   });
 
   // 點擊遮罩關閉
-  overlay?.addEventListener("click", closeModal);
+  overlay?.addEventListener("click", closeFeedbackModal);
 
   sendFeedbackButton?.addEventListener("click", openModal);
 </script>
