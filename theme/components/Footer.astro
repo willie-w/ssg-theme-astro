@@ -132,39 +132,6 @@ const currentYear = new Date().getFullYear();
     </p>
   </div>
 </form>
-<script>
-  // 獲取相關元素
-  const modal = document.getElementById("feedbackModal");
-  const overlay = document.getElementById("feedback-overlay");
-  const closeButton = document.getElementById("closeFeedbackModal");
-  const sendFeedbackButton = document.getElementById("send-feedback-btn");
-  const sendButton = document.querySelector("button[type='submit']");
-
-  // 關閉模態框的函數
-  function closeFeedbackModal() {
-    modal?.classList.remove("show");
-    overlay?.classList.remove("show");
-  }
-  function openModal() {
-    modal?.classList.add("show");
-    overlay?.classList.add("show");
-  }
-
-  // 點擊叉號關閉
-  closeButton?.addEventListener("click", closeFeedbackModal);
-
-  // 點擊 Send 按鈕關閉
-  sendButton?.addEventListener("click", (e) => {
-    e.preventDefault(); // 如果需要提交表單，移除此行
-    closeFeedbackModal();
-    alert("Thank you for your feedback!"); // 顯示確認訊息
-  });
-
-  // 點擊遮罩關閉
-  overlay?.addEventListener("click", closeFeedbackModal);
-
-  sendFeedbackButton?.addEventListener("click", openModal);
-</script>
 
 <!-- end of feedback form -->
 <footer

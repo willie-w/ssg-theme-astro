@@ -530,5 +530,38 @@ let fullscreenImg = null;
   }
 </script>
 <!-- end of modal -->
+
+
+<!-- feedback modal -->
+<script>
+  
+  const modal = document.getElementById("feedbackModal");
+  const overlay = document.getElementById("feedback-overlay");
+  const closeButton = document.getElementById("closeFeedbackModal");
+  const sendFeedbackButton = document.getElementById("send-feedback-btn");
+  const sendButton = document.querySelector("button[type='submit']");
+ 
+  function closeFeedbackModal() {
+    modal?.classList.remove("show");
+    overlay?.classList.remove("show");
+  }
+  function openModal() {
+    modal?.classList.add("show");
+    overlay?.classList.add("show");
+  }
+
+  closeButton?.addEventListener("click", closeFeedbackModal);
+
+  sendButton?.addEventListener("click", () => {
+   
+    closeFeedbackModal();
+    alert("Thank you for your feedback!"); 
+  });
+  
+  overlay?.addEventListener("click", closeFeedbackModal);
+
+  sendFeedbackButton?.addEventListener("click", openModal);
+</script>
+<!-- end of feedback modal -->
   </body>
 </html>
