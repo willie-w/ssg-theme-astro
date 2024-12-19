@@ -540,7 +540,9 @@ let fullscreenImg = null;
   const closeButton = document.getElementById("closeFeedbackModal");
   const sendFeedbackButton = document.getElementById("send-feedback-btn");
  
-  function closeFeedbackModal() {
+  function closeFeedbackModal(event: Event | undefined) {
+  console.log(event); // 这是自动传递的事件对象
+  event?.preventDefault();
     modal?.classList.remove("show");
     overlay?.classList.remove("show");
   }

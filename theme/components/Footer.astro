@@ -4,21 +4,35 @@ import { cn } from "../utils/cn";
 import { sendEmail } from "../utils/sendEmail";
 import type { SendEmailParams } from "../utils/sendEmail";
 
-const handleSubmit = async (event: Event) => {
-  event.preventDefault(); // 防止表單默認提交
-  console.log("Form submitted");
+const handleSubmit = async (event: {
+  preventDefault: () => void;
+  target: any;
+}) => {
+  event.preventDefault(); // 防止页面刷新
 
-  const formData = new FormData(event.target as HTMLFormElement);
+  const form = event.target; // 获取表单元素
+  const formData = new FormData(form);
 
   const emailData: SendEmailParams = {
-    message: formData.get("message") as string,
+    message: formData.get("message")?.toString().trim() || "",
   };
 
+  if (!emailData.message) {
+    alert("Please provide your feedback before sending!");
+    return;
+  }
+
   try {
-    await sendEmail(emailData);
-    console.log("Email sent successfully.");
+    const result = await sendEmail(emailData);
+    if (result) {
+      alert("Email sent successfully!");
+      form.reset(); // 清空表单
+    } else {
+      alert("Failed to send email. Please try again.");
+    }
   } catch (error) {
     console.error("Error sending email:", error);
+    alert("An error occurred while sending your feedback.");
   }
 };
 
@@ -111,9 +125,14 @@ const currentYear = new Date().getFullYear();
           style="margin: 25px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
           <button
+            id="sendFeedbackButton"
+            type="button"
             class="rounded-full px-10 py-1.5 text-lg shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center bg-gray-700 text-white"
-            >Send</button
+            on-click="handleFeedbackSubmit(event)"
+            aria-label="Send feedback"
           >
+            Send
+          </button>
         </div>
       </div>
     </p>
