@@ -8,6 +8,8 @@ import type { SendEmailParams } from "../utils/sendEmail";
 export default function Footer(props: { content: any; }){
   const [isModalOpen, setIsModalOpen] = useState(false); // Controls modal visibility
   const [formStatus, setFormStatus] = useState({ success: false, error: "" });
+  const [message, setMessage] = useState("");
+  const textareaMaxChars = 2000;
 
   const handleClose = () => {
     setIsModalOpen(false); 
@@ -16,6 +18,12 @@ export default function Footer(props: { content: any; }){
     setIsModalOpen(true); 
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const input = e.target.value;
+    if (input.length <= textareaMaxChars) {
+      setMessage(input); 
+    }
+  };
   const { content } = props;
   const currentYear = new Date().getFullYear();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -88,10 +96,15 @@ export default function Footer(props: { content: any; }){
             <textarea
               id="message"
               name="message"
+              onChange={handleInputChange}
               rows={3}
               className="block w-full rounded-md border border-gray-600 px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-600 placeholder:text-gray-400 focus:outline-blue-600"
               defaultValue={""}
               placeholder="Your feedback helps us improve. "></textarea>
+               <div className="text-sm text-gray-500 mb-2">
+               <span className={cn("text-right text-gray-500 block", message.length > textareaMaxChars ? "text-red-600" : "")}>
+  {message.length}/{textareaMaxChars}
+</span>      </div>
           </div>
         </div>
 
@@ -220,6 +233,7 @@ export default function Footer(props: { content: any; }){
                     target="_blank"
                     aria-label={`Open the ${item?.address} in a new tab`}
                     href={item?.url}
+                    
                   >
                     {item?.address}
                   </a>
@@ -427,8 +441,8 @@ export default function Footer(props: { content: any; }){
         color: content?.footer?.textColor || '#ffffff',
       }}
     >
-      <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | 
-      <a href="/accessibility">Accessibility</a> | <a id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen}>Send Feedback</a>
+      <a  href="/privacy" role="button">Privacy</a> | <a href="/terms" role="button">Terms</a> | 
+      <a href="/accessibility" role="button">Accessibility</a> | <a id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen} role="button">Send Feedback</a>
     </p>
     <p
       className="mt-2 text-center text-xs leading-5"
