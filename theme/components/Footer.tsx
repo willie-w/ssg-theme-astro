@@ -79,15 +79,15 @@ export default function Footer(props: { content: any; }){
     <form onSubmit={handleSubmit}>
         <div className="col-span-full">
           <label
-            htmlFor="about"
+            htmlFor="message"
             className="block text-lg font-medium text-gray-900"
           >
             Describe your feedback
           </label>
           <div className="mt-2">
             <textarea
-              id="about"
-              name="about"
+              id="message"
+              name="message"
               rows={3}
               className="block w-full rounded-md border border-gray-600 px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-600 placeholder:text-gray-400 focus:outline-blue-600"
               defaultValue={""}
