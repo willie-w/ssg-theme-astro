@@ -311,7 +311,10 @@ const { content } = Astro.props;
           operational, legal, or regulatory reasons.
         </p>
         <!-- Use of Cookies -->
-        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+        <h2
+          class="mt-16 text-2xl font-bold tracking-tight text-gray-900"
+          id="use-of-cookies"
+        >
           Use of Cookies
         </h2>
         <!-- 1 -->
@@ -412,7 +415,13 @@ const { content } = Astro.props;
           optimized content and services. These cookies may be set by the
           website you’re visiting (first-party) or by third-party services.
         </p>
-        <p class="mt-6">We do not use this type of cookie on our site.</p>
+        <p class="mt-6">
+          {
+            content?.tag
+              ? "We use this type of cookie on our site."
+              : "We do not use this type of cookie on our site."
+          }
+        </p>
 
         <!-- Targeting/advertising cookies -->
         <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
