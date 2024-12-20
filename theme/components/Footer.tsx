@@ -1,4 +1,4 @@
-import PaymentMethod from "./paymentMethod";
+import PaymentMethod from "./PaymentMethod";
 import React,{ useState } from "react";
 import { cn } from "../utils/cn";
 import { sendEmail } from "../utils/sendEmail";
