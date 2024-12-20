@@ -393,7 +393,13 @@ const { content } = Astro.props;
           you.
         </p>
 
-        <p class="mt-6">We use performance cookies on our site.</p>
+        <p class="mt-6">
+          {
+            content?.tag
+              ? "We use this type of cookie on our site."
+              : "We do not use this type of cookie on our site."
+          }
+        </p>
         <!-- Functionality cookies -->
         <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
           Functionality cookies
@@ -423,7 +429,13 @@ const { content } = Astro.props;
           cookies set by third-parties may be used to track you on other
           websites that use the same third-party service.
         </p>
-        <p class="mt-6">We do not use this type of cookie on our site.</p>
+        <p class="mt-6">
+          {
+            content?.tag
+              ? "We use this type of cookie on our site."
+              : "We do not use this type of cookie on our site."
+          }
+        </p>
 
         <!-- Limits of Our Policy -->
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
