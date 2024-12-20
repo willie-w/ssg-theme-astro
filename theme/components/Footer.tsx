@@ -6,7 +6,7 @@ import type { SendEmailParams } from "../utils/sendEmail";
 
 
 export default function Footer(props: { content: any; }){
-  const [isModalOpen, setIsModalOpen] = useState(true); // Controls modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); // Controls modal visibility
   const [formStatus, setFormStatus] = useState({ success: false, error: "" });
 
   const handleClose = () => {
