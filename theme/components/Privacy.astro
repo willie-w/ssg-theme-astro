@@ -117,18 +117,37 @@ const { content } = Astro.props;
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Personal Information
         </h2>
-        <p class="mt-6">
-          We may ask for personal information which may include one or more of
-          the following:
-        </p>
-        <ul class="list-disc list-inside">
-          <li>Name</li>
-          <li>Email</li>
-          <li>Phone/mobile number</li>
-        </ul>
-        <!-- User-Generated Content -->
+        {
+          content?.tag ? (
+            <>
+              <p class="mt-6">
+                We may ask for personal information which may include one or
+                more of the following:
+              </p>
+              <ul class="list-disc list-inside">
+                <li>Name</li>
+                <li>Email</li>
+                <li>Phone/mobile number</li>
+              </ul>
+            </>
+          ) : (
+            <>
+              <p class="mt-6">
+                We do not collect any personal information from our users. This
+                includes, but is not limited to:
+              </p>
+              <ul class="list-disc list-inside">
+                <li>Name</li>
+                <li>Email</li>
+                <li>Phone/mobile number</li>
+              </ul>
+            </>
+          )
+        }
+
+        <!-- User-Generated Content
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
-          User-Generated Content
+          User-Generated Content (if applicable)
         </h2>
         <p class="mt-6">
           We consider “user-generated content” to be materials voluntarily
@@ -142,7 +161,7 @@ const { content } = Astro.props;
           publication will be public after posting (and subsequent review or
           vetting process). Once published, it may be accessible to third
           parties not covered under this privacy policy.
-        </p>
+        </p> -->
         <!-- Legitimate Reasons for Processing Your Personal Information -->
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Legitimate Reasons for Processing Your Personal Information
@@ -153,7 +172,7 @@ const { content } = Astro.props;
           personal information that is reasonably necessary to provide our
           services to you.
         </p>
-        <!-- Legitimate Reasons for Processing Your Personal Information -->
+        <!-- Legitimate Reasons for Processing Your Personal Information
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Collection and Use of Information
         </h2>
@@ -193,9 +212,11 @@ const { content } = Astro.props;
           Please be aware that we may combine information we collect about you
           with general information or research data we receive from other
           trusted sources.
-        </p>
+        </p> -->
 
-        <!-- Security of Your Personal Information -->
+
+{content?.tag && 
+     <div>
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Security of Your Personal Information
         </h2>
@@ -217,7 +238,7 @@ const { content } = Astro.props;
           security strength, ensuring the security of your own information
           within the bounds of our services.
         </p>
-        <!-- How Long We Keep Your Personal Information -->
+      
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           How Long We Keep Your Personal Information
         </h2>
@@ -234,6 +255,9 @@ const { content } = Astro.props;
           archiving purposes in the public interest, scientific, or historical
           research purposes or statistical purposes.
         </p>
+      </div>
+      }
+
         <!-- How Long We Keep Your Personal Information -->
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Children’s Privacy
@@ -243,6 +267,8 @@ const { content } = Astro.props;
           under the age of 13, and we do not knowingly collect personal
           information about children under 13.
         </p>
+
+{content?.tag && 
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Your Rights and Controlling Your Personal Information
         </h2>
@@ -289,7 +315,7 @@ const { content } = Astro.props;
           complaint.
         </p>
 
-        <!-- CCPA -->
+   
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           CCPA
         </h2>
@@ -310,6 +336,7 @@ const { content } = Astro.props;
           reflect, for example, changes to our practices or for other
           operational, legal, or regulatory reasons.
         </p>
+        }
         <!-- Use of Cookies -->
         <h2
           class="mt-16 text-2xl font-bold tracking-tight text-gray-900"
@@ -318,134 +345,34 @@ const { content } = Astro.props;
           Use of Cookies
         </h2>
         <!-- 1 -->
-        <p class="mt-6">
-          We use cookies to help improve your experience of our website. It
-          covers the use of cookies between your device and our site.
-        </p>
-        <!-- 2 -->
-        <p class="mt-6">
-          We also provide basic information on third-party services we may use,
-          who may also use cookies as part of their service. This policy does
-          not cover their cookies.
-        </p>
-        <!-- 3 -->
-        <p class="mt-6">
-          If you don’t wish to accept cookies from us, you should instruct your
-          browser to refuse cookies from this website. In such a case, we may be
-          unable to provide you with some of your desired content and services.
-        </p>
 
-        <!-- What is a cookie? -->
 
-        <h3 class="mt-16 text-xl font-bold tracking-tight text-gray-900">
-          What is a cookie?
-        </h3>
+        {content?.tag ? 
+       ( <>
         <p class="mt-6">
-          A cookie is a small piece of data that a website stores on your device
-          when you visit. It typically contains information about the website
-          itself, a unique identifier that allows the site to recognize your web
-          browser when you return, additional data that serves the cookie’s
-          purpose, and the lifespan of the cookie itself.
+          Like many websites, we use Cookies on our Site. For specific
+          information about the Cookies , see our <a href="/cookie-policy">Cookie Policy</a>. 
+          We use Cookies to power and improve our Site and our Services
+          (including to remember your actions and preferences), to run analytics
+          and better understand user interaction with the Services (in our
+          legitimate interests to administer, improve and optimize the
+          Services). We may also permit third parties and services providers to
+          use Cookies on our Site to better tailor the services, products and
+          advertising on our Site and other websites.
         </p>
         <p class="mt-6">
-          Cookies are used to enable certain features (e.g. logging in), track
-          site usage (e.g. analytics), store your user settings (e.g. time zone,
-          notification preferences), and to personalize your content (e.g.
-          advertising, language).
+          Most browsers automatically accept Cookies by default, but you can
+          choose to set your browser to remove or reject Cookies through your
+          browser controls. Please keep in mind that removing or blocking
+          Cookies can negatively impact your user experience and may cause some
+          of the Services, including certain features and general functionality,
+          to work incorrectly or no longer be available. Additionally, blocking
+          Cookies may not completely prevent how we share information with third
+          parties such as our advertising partners.
         </p>
-        <p class="mt-6">
-          Cookies set by the website you are visiting are usually referred to as
-          first-party cookies. They typically only track your activity on that
-          particular site.
-        </p>
-        <p class="mt-6">
-          Cookies set by other sites and companies (i.e. third parties) are
-          called third-party cookies They can be used to track you on other
-          websites that use the same third-party service.
-        </p>
-
-        <!-- log data -->
-        <h3 class="mt-16 text-xl font-bold tracking-tight text-gray-900">
-          Types of cookies and how we use them
-        </h3>
-        <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
-          Essential cookies
-        </h4>
-        <p class="mt-6">
-          Essential cookies are crucial to your experience of a website,
-          enabling core features like user logins, account management, shopping
-          carts, and payment processing.
-        </p>
-        <p class="mt-6">
-          We use essential cookies to enable certain functions on our website.
-        </p>
-
-        <!-- Performance cookies -->
-        <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
-          Performance cookies
-        </h4>
-        <p class="mt-6">
-          Performance cookies track how you use a website during your visit.
-          Typically, this information is anonymous and aggregated, with
-          information tracked across all site users. They help companies
-          understand visitor usage patterns, identify and diagnose problems or
-          errors their users may encounter, and make better strategic decisions
-          in improving their audience’s overall website experience. These
-          cookies may be set by the website you’re visiting (first-party) or by
-          third-party services. They do not collect personal information about
-          you.
-        </p>
-
-        <p class="mt-6">
-          {
-            content?.tag
-              ? "We use this type of cookie on our site."
-              : "We do not use this type of cookie on our site."
-          }
-        </p>
-        <!-- Functionality cookies -->
-        <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
-          Functionality cookies
-        </h4>
-        <p class="mt-6">
-          Functionality cookies are used to collect information about your
-          device and any settings you may configure on the website you’re
-          visiting (like language and time zone settings). With this
-          information, websites can provide you with customized, enhanced, or
-          optimized content and services. These cookies may be set by the
-          website you’re visiting (first-party) or by third-party services.
-        </p>
-        <p class="mt-6">
-          {
-            content?.tag
-              ? "We use this type of cookie on our site."
-              : "We do not use this type of cookie on our site."
-          }
-        </p>
-
-        <!-- Targeting/advertising cookies -->
-        <h4 class="mt-8 text-lg font-bold tracking-tight text-gray-900">
-          Targeting/Advertising cookies
-        </h4>
-        <p class="mt-6">
-          Targeting/advertising cookies help determine what promotional content
-          is most relevant and appropriate to you and your interests. Websites
-          may use them to deliver targeted advertising or limit the number of
-          times you see an advertisement. This helps companies improve the
-          effectiveness of their campaigns and the quality of content presented
-          to you. These cookies may be set by the website you’re visiting
-          (first-party) or by third-party services. Targeting/advertising
-          cookies set by third-parties may be used to track you on other
-          websites that use the same third-party service.
-        </p>
-        <p class="mt-6">
-          {
-            content?.tag
-              ? "We use this type of cookie on our site."
-              : "We do not use this type of cookie on our site."
-          }
-        </p>
-
+      </>):
+      <p>
+        Our website does not use cookies to collect any user information. Therefore, we do not place any cookies on your device, nor do we track your activities through cookies.</p>}
         <!-- Limits of Our Policy -->
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Limits of Our Policy
@@ -484,13 +411,16 @@ const { content } = Astro.props;
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Contact Us
         </h2>
+     
         <p class="mt-6">
           For any questions or concerns regarding your privacy, you may contact
           us using the following details:
         </p>
         <div class="mt-6">
-          <p>{content?.title}</p>
-          <p>{content?.tel ? "Tel: +1-" + content?.tel : ""}</p>
+          <p class="mt-2">{content?.title}</p>
+          <p class="mt-2">{content?.email}</p>
+          <p class="mt-2">{content?.address}</p>
+          <p class="mt-2">{content?.tel}</p>
           <br />
           <!-- <p>
             Alternatively, you can contact us through the feedback form
