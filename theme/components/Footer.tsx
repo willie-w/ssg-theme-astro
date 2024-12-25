@@ -450,7 +450,7 @@ export default function Footer(props: { content: any; }){
         color: content?.footer?.textColor || '#ffffff',
       }}
     >
-      &copy; {currentYear}
+      &copy; {currentYear+" "}
       {content?.title?.replace(" - Best Food Today", "")} All Rights Reserved. Created
       by <a href="https://bestfood.today/">Best Food Today </a>.
     </p>
