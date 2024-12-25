@@ -442,7 +442,7 @@ export default function Footer(props: { content: any; }){
       }}
     >
       <a  href="/privacy" role="button">Privacy</a> | <a href="/terms" role="button">Terms</a> | 
-      <a href="/accessibility" role="button">Accessibility</a> | <a id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen} role="button" tabIndex="0">Send Feedback</a>
+      <a href="/accessibility" role="button">Accessibility</a> | <button id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen} >Send Feedback</button>
     </p>
     <p
       className="mt-2 text-center text-xs leading-5"
