@@ -53,7 +53,7 @@ const { content } = Astro.props;
             We try to respond to feedback within 5 business days.
           </p>
           <p class="mt-6">
-            This statement was created on {
+            {
               content?.creationDate &&
                 "This statement was created on " + content?.creationDate
             }
