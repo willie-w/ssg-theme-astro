@@ -40,9 +40,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     <img
                       src={item?.src?.replace("/public", "")}
                       alt={item?.name}
-                      class="w-full object-contain object-contain cursor-pointer"
+                      class="w-full object-contain cursor-pointer"
                       loading="lazy"
                       data-src={item?.src}
+                      tabindex="0"
                     />
                   </div>
                   {section?.showImgName ? (
@@ -105,9 +106,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     <img
                       src={item?.src?.replace("/public", "")}
                       alt={item?.name}
-                      class="w-full object-contain object-contain cursor-pointer"
+                      class="w-full object-contain cursor-pointer"
                       loading="lazy"
                       data-src={item?.src}
+                      tabindex="0"
                     />
                   </div>
                   {section?.showImgName ? (
@@ -174,6 +176,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain cursor-pointer`}
                     loading="lazy"
                     data-src={item?.src}
+                    tabindex="0"
                   />
                   {section?.showImgName ? (
                     <div
@@ -236,6 +239,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain cursor-pointer`}
                     loading="lazy"
                     data-src={item?.src}
+                    tabindex="0"
                   />
                   {section?.showImgName ? (
                     <div
