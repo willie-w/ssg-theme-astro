@@ -9,7 +9,7 @@ const { content } = Astro.props;
         <h1
           class="mt-2 text-3xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl"
         >
-          Accessibility
+          Accessibility Statement
         </h1>
         <!-- 1 -->
         <p class="mt-6">
@@ -19,12 +19,19 @@ const { content } = Astro.props;
           user-friendly for people with disabilities and everyone else.
         </p>
         <!-- 2 -->
+        <h2 class="mt-6 font-bold">Conformance status</h2>
         <p class="mt-6">
-          Presently, we are integrating aspects of the World Wide Web
-          Consortium's Web Content Accessibility Guidelines 2.0 Level AA (WCAG
-          2.0 AA) as our standard for web accessibility.
+          The <a href="https://www.w3.org/WAI/standards-guidelines/wcag/"
+            >Web Content Accessibility Guidelines (WCAG)</a
+          > defines requirements for designers and developers to improve accessibility
+          for people with disabilities. It defines three levels of conformance: Level
+          A, Level AA, and Level AAA. Our Website is partially conformant with WCAG
+          2.1 level AA. Partially conformant means that some parts of the content
+          do not fully conform to the accessibility standard.
         </p>
         <!-- 3 -->
+        <h2 class="mt-6 font-bold">Feedback</h2>
+
         <p class="mt-6">
           Your feedback regarding the accessibility of our services is highly
           valued. If you encounter any accessibility barriers while using our
@@ -35,13 +42,16 @@ const { content } = Astro.props;
 
         <div class="mt-6">
           <p class="mt-2">{content?.title}</p>
-          {content?.tel && <p class="mt-2">{"Tel: " + content.tel}</p>}
+          {content?.tel && <p class="mt-2">{"Phone: " + content.tel}</p>}
           {content?.email && <p class="mt-2">{"Email: " + content.email}</p>}
           {
             content?.address && (
-              <p class="mt-2">{"Address: " + content.address}</p>
+              <p class="mt-2">{"Postal address: " + content.address}</p>
             )
           }
+          <p class="mt-6">
+            We try to respond to feedback within 5 business days.
+          </p>
         </div>
       </div>
     </div>
