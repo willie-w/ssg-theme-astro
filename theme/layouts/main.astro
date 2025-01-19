@@ -13,6 +13,7 @@ import GoogleForm from "../components/GoogleForm.astro";
 import Privacy from "../components/Privacy.astro";
 import Terms from "../components/Terms.astro";
 import Accessibility from "../components/Accessibility.astro";
+import Reviews from "../components/Reviews.astro";
 import "../style/global.css";
 
 // Define the input types
@@ -459,6 +460,8 @@ let fullscreenImg = null;
           return <GoogleForm content={content} section={section} />;
         } else if (section?.type === "textBlock") {
           return <TextBlock content={content} section={section} />;
+        } else if (section?.type === "reviews") {
+          return <Reviews  section={section} />;
         }else if (section?.type === "codeInsert") {
           return <CodeInsert section={section} />;
         }else if (section?.type === "privacy") {
