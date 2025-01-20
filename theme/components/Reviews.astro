@@ -67,93 +67,87 @@ const getInitial = (name: string) => {
         }
       </div>
 
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div
-          class="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none"
-        >
-          <div class="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] md:columns-3">
-            {
-              section?.items?.map((testimonial: TestimonialsData) => (
-                <Fragment key={testimonial?.body}>
-                  <div
-                    class={cn(
-                      "pt-8 sm:inline-block sm:w-full sm:px-4",
-                      section?.classes?.body
-                    )}
-                  >
-                    <figure class="rounded-2xl bg-gray-50 p-4 sm:p-8 text-lg/6">
-                      {testimonial?.body && (
-                        <blockquote class="text-gray-900">
-                          <p>{`“${testimonial?.body}”`}</p>
-                        </blockquote>
-                      )}
-                      <div class="mt-6 flex items-center gap-x-4">
-                        <div
-                          class={`size-10 rounded-full flex items-center justify-center ${getRandomColor()}`}
-                        >
-                          <span class="text-white text-lg font-bold">
-                            {getInitial(testimonial?.author?.name)}
-                          </span>
-                        </div>
+      <div class="sm:-mx-4 sm:columns-2 sm:text-[0] md:columns-3">
+        {
+          section?.items?.map((testimonial: TestimonialsData) => (
+            <Fragment key={testimonial?.body}>
+              <div
+                class={cn(
+                  "pt-8 sm:inline-block sm:w-full sm:px-4",
+                  section?.classes?.body
+                )}
+              >
+                <figure class="rounded-2xl bg-gray-50 p-4 sm:p-8 text-lg/6">
+                  {testimonial?.body && (
+                    <blockquote class="text-gray-900">
+                      <p>{`“${testimonial?.body}”`}</p>
+                    </blockquote>
+                  )}
+                  <div class="mt-6 flex items-center gap-x-4">
+                    <div
+                      class={`size-10 rounded-full flex items-center justify-center ${getRandomColor()}`}
+                    >
+                      <span class="text-white text-lg font-bold">
+                        {getInitial(testimonial?.author?.name)}
+                      </span>
+                    </div>
 
-                        <div>
-                          {testimonial?.author?.name && (
-                            <div class="font-semibold text-gray-900">
-                              {testimonial?.author?.name}
-                            </div>
-                          )}
-                          {testimonial?.author?.handle && (
-                            <div class="text-gray-600">{`@${testimonial?.author?.handle}`}</div>
-                          )}
-                          {testimonial?.rating?.rating && (
-                            <div
-                              role="img"
-                              aria-label={` ${testimonial.rating.rating} out of ${testimonial.rating.maxStars || 5} stars`}
-                            >
-                              <div class="flex items-center mt-1">
-                                {Array.from(
-                                  {
-                                    length: testimonial?.rating?.maxStars || 5,
-                                  },
-                                  (_, index) => (
-                                    <Fragment key={index}>
-                                      <svg
-                                        class={cn(
-                                          index < testimonial.rating.rating
-                                            ? "text-yellow-400"
-                                            : "text-gray-300",
-                                          "size-4.5 shrink-0"
-                                        )}
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        class="icon icon-tabler icons-tabler-filled icon-tabler-star"
-                                      >
-                                        <path
-                                          stroke="none"
-                                          d="M0 0h24v24H0z"
-                                          fill="none"
-                                        />
-                                        <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
-                                      </svg>
-                                    </Fragment>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          )}
+                    <div>
+                      {testimonial?.author?.name && (
+                        <div class="font-semibold text-gray-900">
+                          {testimonial?.author?.name}
                         </div>
-                      </div>
-                    </figure>
+                      )}
+                      {testimonial?.author?.handle && (
+                        <div class="text-gray-600">{`@${testimonial?.author?.handle}`}</div>
+                      )}
+                      {testimonial?.rating?.rating && (
+                        <div
+                          role="img"
+                          aria-label={` ${testimonial.rating.rating} out of ${testimonial.rating.maxStars || 5} stars`}
+                        >
+                          <div class="flex items-center mt-1">
+                            {Array.from(
+                              {
+                                length: testimonial?.rating?.maxStars || 5,
+                              },
+                              (_, index) => (
+                                <Fragment key={index}>
+                                  <svg
+                                    class={cn(
+                                      index < testimonial.rating.rating
+                                        ? "text-yellow-400"
+                                        : "text-gray-300",
+                                      "size-4.5 shrink-0"
+                                    )}
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                  >
+                                    <path
+                                      stroke="none"
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                  </svg>
+                                </Fragment>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </Fragment>
-              ))
-            }
-          </div>
-        </div>
+                </figure>
+              </div>
+            </Fragment>
+          ))
+        }
       </div>
     </div>
   </div>
