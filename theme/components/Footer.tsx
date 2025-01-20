@@ -452,8 +452,9 @@ export default function Footer(props: { content: any; }){
       }}
     >
       &copy; {currentYear+" "}
-      {content?.title?.replace(" - Best Food Today", "")} All Rights Reserved. Created
-      by <a href="https://bestfood.today/">Best Food Today </a>.
+      {content?.title?.replace(" - Best Food Today", "")} All Rights Reserved. 
+      {content?.footer?.hideBestFoodToday ? "": (<> Created by <a href="https://bestfood.today/">Best Food Today </a>.</>)}
+    
     </p>
   </div>
 </footer>
