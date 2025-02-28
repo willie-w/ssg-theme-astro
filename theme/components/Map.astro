@@ -34,7 +34,7 @@ const { content, section, isChildComponent } = Astro.props;
                 ? section?.telInsteadText
                 : `Tel: ${content?.tel}`
             }
-            href={`tel:${section?.telTrackingNum ? section?.telTrackingNum : content?.trackingNum ? content?.trackingNum : content?.tel ? content?.tel : section?.tel}`}
+            href={`tel:${content?.tel ? content?.tel : section?.tel}`}
             id="mapTelBtn"
           />
         ) : (
@@ -50,7 +50,7 @@ const { content, section, isChildComponent } = Astro.props;
                 ? section?.tel2InsteadText
                 : `tel: ${content?.tel2}`
             }
-            href={`tel:${section?.telTrackingNum2 ? section?.telTrackingNum2 : content?.trackingNum ? content?.trackingNum : section?.tel2}`}
+            href={`tel:${section?.tel2}`}
             id="mapTelBtn2"
           />
         ) : (
