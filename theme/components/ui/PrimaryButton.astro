@@ -12,6 +12,7 @@ const { content, text, href, backgroundColor } = Astro.props;
   )}
   style={`background-color:${backgroundColor ? backgroundColor : content?.primaryColor};`}
   target="_blank"
+  rel="noopener noreferrer"
   aria-label={`Open the ${text} in a new tab`}
 >
   {text}
