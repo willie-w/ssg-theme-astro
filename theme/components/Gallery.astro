@@ -4,7 +4,107 @@ import { cn } from "../utils/cn";
 
 const { section } = Astro.props;
 const images = getImagesFromFolders("/public/" + section?.folderPath);
+const galleryGridId = `gallery-grid-${String(
+  section?.id || section?.folderPath || "default"
+).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+const parseVisibleCount = (value: unknown, fallback: number) => {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed < 1) return fallback;
+  return Math.floor(parsed);
+};
+const initialVisibleMobile = parseVisibleCount(
+  section?.initialVisibleMobile,
+  4
+);
+const initialVisibleDesktop = parseVisibleCount(
+  section?.initialVisibleDesktop,
+  8
+);
 ---
+
+<style is:global>
+  .gallery-grid:not(.gallery-expanded) .gallery-item.gallery-mobile-hidden {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid:not(.gallery-expanded) .gallery-item.gallery-mobile-hidden {
+      display: list-item;
+    }
+
+    .gallery-grid:not(.gallery-expanded) .gallery-item.gallery-desktop-hidden {
+      display: none;
+    }
+  }
+
+  .gallery-grid.gallery-expanded .gallery-item {
+    display: list-item;
+  }
+</style>
+
+<script>
+  if (!window.__galleryExpandInit) {
+    window.__galleryExpandInit = true;
+
+  const parseLimit = (value, fallback) => {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed) || parsed < 1) return fallback;
+    return Math.floor(parsed);
+  };
+
+  const updateGalleryButtons = () => {
+    const grids = document.querySelectorAll("[data-gallery-grid]");
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+    grids.forEach((grid) => {
+      const targetId = grid.getAttribute("id");
+      if (!targetId) return;
+
+      const button = document.querySelector(
+        `.gallery-expand-btn[data-gallery-target="${targetId}"]`
+      );
+      if (!button) return;
+
+      if (grid.classList.contains("gallery-expanded")) {
+        button.remove();
+        return;
+      }
+
+      const mobileLimit = parseLimit(
+        grid.getAttribute("data-visible-mobile"),
+        4
+      );
+      const desktopLimit = parseLimit(
+        grid.getAttribute("data-visible-desktop"),
+        8
+      );
+      const visibleLimit = isDesktop ? desktopLimit : mobileLimit;
+      const totalItems = grid.querySelectorAll(".gallery-item").length;
+
+      button.style.display = totalItems > visibleLimit ? "" : "none";
+    });
+  };
+
+  document.addEventListener("click", (event) => {
+    const button = event.target instanceof Element
+      ? event.target.closest(".gallery-expand-btn")
+      : null;
+    if (!button) return;
+
+    const gridId = button.getAttribute("data-gallery-target");
+    if (!gridId) return;
+
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+
+    grid.classList.add("gallery-expanded");
+    button.remove();
+  });
+
+  document.addEventListener("DOMContentLoaded", updateGalleryButtons);
+  window.addEventListener("resize", updateGalleryButtons);
+  }
+</script>
 
 <section
   id={`${section?.id || ""}`}
@@ -228,11 +328,22 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
           </div>
           <ul
             role="list"
-            class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
+            id={galleryGridId}
+            data-gallery-grid
+            data-visible-mobile={initialVisibleMobile}
+            data-visible-desktop={initialVisibleDesktop}
+            class="gallery-grid mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
           >
             {images?.map((item, index) => (
               <Fragment key={index}>
-                <li>
+                <li
+                  class={cn(
+                    "gallery-item",
+                    index + 1 > initialVisibleMobile ? "gallery-mobile-hidden" : "",
+                    index + 1 > initialVisibleDesktop ? "gallery-desktop-hidden" : ""
+                  )}
+                  data-index={index}
+                >
                   <img
                     src={item?.src?.replace("/public", "")}
                     alt={item?.name}
@@ -263,6 +374,18 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
               </Fragment>
             ))}
           </ul>
+
+          {images?.length > Math.min(initialVisibleMobile, initialVisibleDesktop) && (
+            <div class="flex justify-center mt-12">
+              <button
+                type="button"
+                class="gallery-expand-btn px-8 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+                data-gallery-target={galleryGridId}
+              >
+                View More
+              </button>
+            </div>
+          )}
         </div>
       </div>
     )

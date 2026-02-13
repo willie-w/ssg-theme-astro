@@ -14,6 +14,7 @@ import Privacy from "../components/Privacy.astro";
 import Terms from "../components/Terms.astro";
 import Accessibility from "../components/Accessibility.astro";
 import Reviews from "../components/Reviews.astro";
+import GoogleReviewsSlider from "../components/GoogleReviewsSlider.astro";
 import "../style/global.css";
 
 // Define the input types
@@ -462,7 +463,9 @@ let fullscreenImg = null;
           return <TextBlock content={content} section={section} />;
         } else if (section?.type === "reviews") {
           return <Reviews  section={section} />;
-        }else if (section?.type === "codeInsert") {
+        } else if (section?.type === "googleReviewsSlider") {
+          return <GoogleReviewsSlider section={section} />;
+        } else if (section?.type === "codeInsert") {
           return <CodeInsert section={section} />;
         }else if (section?.type === "privacy") {
           return <Privacy section={section} content={content} />;

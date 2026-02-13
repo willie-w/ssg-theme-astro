@@ -1,0 +1,305 @@
+---
+import { cn } from "../utils/cn";
+
+type GoogleReview = {
+  author: { name: string; imageUrl?: string | null };
+  rating: number;
+  body: string;
+};
+
+const { section } = Astro.props;
+
+const getRandomColor = () => {
+  const colors = [
+    "bg-red-700",
+    "bg-blue-700",
+    "bg-green-700",
+    "bg-yellow-700",
+    "bg-purple-700",
+    "bg-pink-700",
+    "bg-orange-700",
+    "bg-teal-700",
+    "bg-indigo-700",
+    "bg-lime-700",
+    "bg-cyan-700",
+    "bg-amber-700",
+    "bg-rose-700",
+    "bg-fuchsia-700",
+    "bg-emerald-700",
+    "bg-sky-700",
+    "bg-violet-700",
+    "bg-stone-700",
+    "bg-gray-700",
+    "bg-zinc-700",
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+const getInitial = (name: string) => {
+  return name ? name.charAt(0).toUpperCase() : "?";
+};
+---
+
+<section
+  id={`${section?.id || ""}`}
+  class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
+>
+  <div style={`background-color:${section?.bgColor}`}>
+    <div class="mx-auto max-w-7xl px-2 lg:px-8">
+      <div class="mx-auto max-w-2xl">
+        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
+          {
+            section?.title?.map((line: string, index: number) => (
+              <Fragment key={index}>
+                <span class="block leading-16">{line}</span>
+              </Fragment>
+            ))
+          }
+        </h2>
+
+        {
+          section?.description?.map((info: string, index: number) => (
+            <Fragment key={index}>
+              <p class="mt-4 text-lg leading-8 text-gray-600 text-center">
+                {info}
+              </p>
+            </Fragment>
+          ))
+        }
+      </div>
+
+      <!-- Slider Container -->
+      <div class="mt-12 relative">
+        <!-- Reviews Wrapper -->
+        <div
+          class="reviews-slider-wrapper overflow-x-auto"
+          style={{
+            scrollBehavior: "smooth",
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
+          <div class="reviews-slider-track flex gap-6 pb-4">
+            {
+              section?.items?.map((review: GoogleReview, index: number) => (
+                <div
+                  key={index}
+                  class="reviews-slider-item flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] "
+                >
+                  <div class="h-full rounded-2xl bg-gray-50 p-6 sm:p-8 flex flex-col">
+                    <!-- Star Rating -->
+                    {review?.rating && (
+                      <div
+                        role="img"
+                        aria-label={`${review.rating} out of 5 stars`}
+                        class="mb-4"
+                      >
+                        <div class="flex items-center gap-1">
+                          {Array.from({ length: 5 }, (_, starIndex) => (
+                            <svg
+                              key={starIndex}
+                              class={cn(
+                                starIndex < review.rating
+                                  ? "text-yellow-400"
+                                  : "text-gray-300",
+                                "size-5 shrink-0"
+                              )}
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <!-- Review Text -->
+                    {review?.body && (
+                      <blockquote class="text-gray-900 text-base leading-6 mb-6 flex-grow">
+                        <p>{`"${review.body}"`}</p>
+                      </blockquote>
+                    )}
+
+                    <!-- Author Info -->
+                    <div class="flex items-center gap-x-4 mt-auto pt-6 border-t border-gray-200">
+                      {review?.author?.imageUrl ? (
+                        <img
+                          src={review.author.imageUrl}
+                          alt={review.author.name}
+                          class="size-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          class={`size-12 rounded-full flex items-center justify-center ${getRandomColor()}`}
+                        >
+                          <span class="text-white text-lg font-bold">
+                            {getInitial(review.author.name)}
+                          </span>
+                        </div>
+                      )}
+
+                      <div>
+                        {review?.author?.name && (
+                          <div class="font-semibold text-gray-900">
+                            {review.author.name}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button
+          class="reviews-slider-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow hidden lg:flex items-center justify-center"
+          aria-label="Previous reviews"
+        >
+          <svg
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+
+        <button
+          class="reviews-slider-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow hidden lg:flex items-center justify-center"
+          aria-label="Next reviews"
+        >
+          <svg
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dots Indicator -->
+      <div class="flex justify-center gap-2 mt-8">
+        {
+          section?.items?.map((_: GoogleReview, index: number) => (
+            <button
+              key={index}
+              class="reviews-slider-dot w-2 h-2 rounded-full bg-gray-300 transition-all hover:bg-gray-600 cursor-pointer"
+              data-slide={index}
+              aria-label={`Go to review ${index + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-slider-wrapper {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .reviews-slider-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reviews-slider-item {
+    scroll-snap-align: start;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Find all slider instances
+    const sliders = document.querySelectorAll(".reviews-slider-wrapper");
+
+    sliders.forEach((slider) => {
+      const prevBtn = slider
+        .closest(".relative")
+        ?.querySelector(".reviews-slider-prev");
+      const nextBtn = slider
+        .closest(".relative")
+        ?.querySelector(".reviews-slider-next");
+      const track = slider.querySelector(".reviews-slider-track");
+      const dots = slider
+        .closest("section")
+        ?.querySelectorAll(".reviews-slider-dot");
+
+      if (!track) return;
+
+      const itemWidth = track.querySelector(".reviews-slider-item")?.offsetWidth;
+      const gap = 24; // 6 * 4 (from gap-6 which is 1.5rem = 24px)
+      let currentIndex = 0;
+
+      const updateSlider = (index: number) => {
+        if (!itemWidth) return;
+        const scrollPosition = (itemWidth + gap) * index;
+        slider.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+
+        // Update dots
+        dots?.forEach((dot, idx) => {
+          if (idx === index) {
+            dot.classList.add("bg-gray-600");
+            dot.classList.remove("bg-gray-300");
+          } else {
+            dot.classList.remove("bg-gray-600");
+            dot.classList.add("bg-gray-300");
+          }
+        });
+
+        currentIndex = index;
+      };
+
+      // Previous button
+      prevBtn?.addEventListener("click", () => {
+        const newIndex = Math.max(0, currentIndex - 1);
+        updateSlider(newIndex);
+      });
+
+      // Next button
+      nextBtn?.addEventListener("click", () => {
+        const totalItems = track.querySelectorAll(".reviews-slider-item").length;
+        const maxIndex = Math.max(0, totalItems - 3); // Show 3 items on desktop
+        const newIndex = Math.min(maxIndex, currentIndex + 1);
+        updateSlider(newIndex);
+      });
+
+      // Dots click
+      dots?.forEach((dot, idx) => {
+        dot.addEventListener("click", () => {
+          updateSlider(idx);
+        });
+      });
+
+      // Initialize first dot as active
+      updateSlider(0);
+    });
+  });
+</script>
