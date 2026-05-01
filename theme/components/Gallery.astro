@@ -2,7 +2,7 @@
 import { getImagesFromFolders } from "../utils/readImages";
 import { cn } from "../utils/cn";
 
-const { section } = Astro.props;
+const { section, content } = Astro.props;
 const images = getImagesFromFolders("/public/" + section?.folderPath);
 const galleryGridId = `gallery-grid-${String(
   section?.id || section?.folderPath || "default"
@@ -20,6 +20,10 @@ const initialVisibleDesktop = parseVisibleCount(
   section?.initialVisibleDesktop,
   8
 );
+const viewMoreHref = section?.viewMoreHref ? String(section.viewMoreHref) : "";
+const normalizedViewMoreHref = viewMoreHref && /^\/(?!\/)/.test(viewMoreHref)
+  ? `${viewMoreHref.replace(/\/+$/, "")}/`
+  : viewMoreHref;
 ---
 
 <style is:global>
@@ -43,47 +47,47 @@ const initialVisibleDesktop = parseVisibleCount(
 </style>
 
 <script>
-  if (!window.__galleryExpandInit) {
-    window.__galleryExpandInit = true;
+  if (!(window as any).__galleryExpandInit) {
+    (window as any).__galleryExpandInit = true;
 
-  const parseLimit = (value: any, fallback: number) => {
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed) || parsed < 1) return fallback;
-    return Math.floor(parsed);
-  };
+    const parseLimit = (value: unknown, fallback: number): number => {
+      const parsed = Number(value);
+      if (!Number.isFinite(parsed) || parsed < 1) return fallback;
+      return Math.floor(parsed);
+    };
 
-  const updateGalleryButtons = () => {
-    const grids = document.querySelectorAll("[data-gallery-grid]");
-    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const updateGalleryButtons = () => {
+      const grids = document.querySelectorAll("[data-gallery-grid]");
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
 
-    grids.forEach((grid) => {
-      const targetId = grid.getAttribute("id");
-      if (!targetId) return;
+      grids.forEach((grid) => {
+        const targetId = grid.getAttribute("id");
+        if (!targetId) return;
 
-      const button = document.querySelector<HTMLElement>(
-        `.gallery-expand-btn[data-gallery-target="${targetId}"]`
-      );
-      if (!button) return;
+        const button = document.querySelector(
+          `.gallery-expand-btn[data-gallery-target="${targetId}"]`
+        ) as HTMLElement | null;
+        if (!button) return;
 
-      if (grid.classList.contains("gallery-expanded")) {
-        button.remove();
-        return;
-      }
+        if (grid.classList.contains("gallery-expanded")) {
+          button.remove();
+          return;
+        }
 
-      const mobileLimit = parseLimit(
-        grid.getAttribute("data-visible-mobile"),
-        4
-      );
-      const desktopLimit = parseLimit(
-        grid.getAttribute("data-visible-desktop"),
-        8
-      );
-      const visibleLimit = isDesktop ? desktopLimit : mobileLimit;
-      const totalItems = grid.querySelectorAll(".gallery-item").length;
+        const mobileLimit = parseLimit(
+          grid.getAttribute("data-visible-mobile"),
+          4
+        );
+        const desktopLimit = parseLimit(
+          grid.getAttribute("data-visible-desktop"),
+          8
+        );
+        const visibleLimit = isDesktop ? desktopLimit : mobileLimit;
+        const totalItems = grid.querySelectorAll(".gallery-item").length;
 
-      button.style.display = totalItems > visibleLimit ? "" : "none";
-    });
-  };
+        button.style.display = totalItems > visibleLimit ? "" : "none";
+      });
+    };
 
   document.addEventListener("click", (event) => {
     const button = event.target instanceof Element
@@ -375,15 +379,15 @@ const initialVisibleDesktop = parseVisibleCount(
             ))}
           </ul>
 
-          {images?.length > Math.min(initialVisibleMobile, initialVisibleDesktop) && (
+          {(section?.viewMoreHref || images?.length > Math.min(initialVisibleMobile, initialVisibleDesktop)) && (
             <div class="flex justify-center mt-12">
-              {section?.viewMoreBtnHref ? (
+              {section?.viewMoreHref ? (
                 <a
-                  href={section.viewMoreBtnHref}
-                  target="_blank"
-                  class="px-8 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+                  href={normalizedViewMoreHref}
+                  class="rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center text-white"
+                  style={`background-color:${content?.primaryColor || "#E9882E"};`}
                 >
-                  {section?.viewMoreBtnText || "View More"}
+                  {section?.viewMoreText || "View More"}
                 </a>
               ) : (
                 <button
@@ -391,7 +395,7 @@ const initialVisibleDesktop = parseVisibleCount(
                   class="gallery-expand-btn px-8 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
                   data-gallery-target={galleryGridId}
                 >
-                  {section?.viewMoreBtnText || "View More"}
+                  View More
                 </button>
               )}
             </div>

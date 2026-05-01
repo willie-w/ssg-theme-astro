@@ -6,6 +6,10 @@ import Map from "./Map.astro";
 import { cn } from "../utils/cn";
 
 const { content, section } = Astro.props;
+const heroBackgroundImages = Array.isArray(section?.bgImgs)
+  ? section.bgImgs.filter(Boolean)
+  : [];
+
 function hexToRgb(hex:string) {
   const parsedHex = hex?.replace("#", "");
   
@@ -24,13 +28,16 @@ function hexToRgb(hex:string) {
     section?.type === "feature"
       ? section?.noMarginTop
         ? "pt-0"
-        : "pt-16 sm:pt-24 md:pt-32"
-      : ""
+        : "pt-4 pb-4 sm:pt-10 sm:pb-10 md:pt-16 md:pb-16"
+      : "",
+    section?.paddingTop || "",
+    section?.paddingBottom || ""
   )}
   style={section?.type === "feature"
     ? `${section?.bgColor ? `background-color: ${section?.bgColor};` : ""}  ${section?.bgOpacity ? `opacity: ${section?.bgOpacity};` : ""}`
     : ""}
   id={`${section?.id || ""}`}
+  data-hero-slider={heroBackgroundImages.length > 0 ? "true" : undefined}
 >
   <div
     class={cn(
@@ -150,7 +157,21 @@ function hexToRgb(hex:string) {
       )
     }
     {
-      section?.bgImg ? (
+      heroBackgroundImages.length > 0 ? (
+        <div class="absolute inset-0 -z-10">
+          {heroBackgroundImages.map((image: string, index: number) => (
+            <img
+              src={`/${image}`}
+              alt={content?.title}
+              class={cn(
+                "hero-bg-slide absolute inset-0 h-full w-full object-cover transition-opacity duration-1000",
+                index === 0 ? "opacity-100" : "opacity-0"
+              )}
+              data-hero-slide
+            />
+          ))}
+        </div>
+      ) : section?.bgImg ? (
         <img
           src={`/${section?.bgImg}`}
           alt={content?.title}
@@ -338,7 +359,7 @@ function hexToRgb(hex:string) {
             <div
               class={cn(
                 "lg:flex lg:flex-col justify-center ",
-                section?.imgPosition === "imgRight" ? "order-first" : "",
+                section?.imgPosition === "imgRight" ? "lg:order-first" : "",
                 section?.isTextAlignCenter ? "text-center sm:text-left" : ""
               )}
             >
@@ -557,6 +578,21 @@ function hexToRgb(hex:string) {
   </div>
 </section>
 <script>
+  document.querySelectorAll("[data-hero-slider='true']").forEach((heroSection) => {
+    const slides = heroSection.querySelectorAll("[data-hero-slide]");
+    if (slides.length <= 1) return;
+
+    let activeIndex = 0;
+
+    window.setInterval(() => {
+      slides[activeIndex]?.classList.add("opacity-0");
+      slides[activeIndex]?.classList.remove("opacity-100");
+      activeIndex = (activeIndex + 1) % slides.length;
+      slides[activeIndex]?.classList.add("opacity-100");
+      slides[activeIndex]?.classList.remove("opacity-0");
+    }, 4000);
+  });
+
   // Function to mute the video
   function muteGJWVideo() {
     const iframe = document.getElementById("gjw-video") as HTMLIFrameElement;
@@ -574,3 +610,8 @@ function hexToRgb(hex:string) {
     muteGJWVideo();
   };
 </script>
+<style>
+  .hero-bg-slide {
+    will-change: opacity;
+  }
+</style>

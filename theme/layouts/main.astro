@@ -99,6 +99,7 @@ const isModal = content?.sections?.some(
   (item: { type: string | string[] }) =>
     item?.type && item.type.includes("modal")
 );
+const isZhCn = content?.locale === "zh_CN" || content?.seo?.locale === "zh_CN";
 
 // structured data
 
@@ -110,6 +111,7 @@ const generateStructuredData = ({
   address,
   review,
   geo,
+  url,
   servesCuisine,
   telephone,
   acceptsReservations,
@@ -159,6 +161,7 @@ const generateStructuredData = ({
       longitude: geo.longitude
     };
   }
+  if (url) structuredData.url = url;
   if (servesCuisine) structuredData.servesCuisine = servesCuisine;
   if (telephone) structuredData.telephone = telephone;
   if (acceptsReservations ) {
@@ -350,7 +353,13 @@ let fullscreenImg = null;
         ""
       )
     }
-    <meta name="robots" content="index, follow" />
+    {
+      isZhCn ? (
+        <meta name="robots" content={content?.seo?.robots ?? "noindex, nofollow"} />
+      ) : (
+        <meta name="robots" content={content?.seo?.robots ?? "index, follow"} />
+      )
+    }
     <meta name="author" content="Best Food Today" />
 
     <!-- Open Graph Meta Tags -->
@@ -382,7 +391,25 @@ let fullscreenImg = null;
         ""
       )
     }
+    {
+      content?.seo?.name ? (
+        <meta property="og:site_name" content={content?.seo?.name} />
+      ) : (
+        ""
+      )
+    }
     <meta property="og:type" content="website" />
+    {
+      content?.seo?.geo ? (
+        <>
+          <meta name="geo.region" content={content?.seo?.address?.addressRegion ? `US-${content?.seo?.address?.addressRegion}` : "US-CA"} />
+          <meta name="geo.position" content={`${content?.seo?.geo.latitude};${content?.seo?.geo.longitude}`} />
+          <meta name="ICBM" content={`${content?.seo?.geo.latitude}, ${content?.seo?.geo.longitude}`} />
+        </>
+      ) : (
+        ""
+      )
+    }
     {content?.seo?.locale?
     <meta property="og:locale" content={content?.seo?.locale}/>:""}
 
@@ -390,7 +417,7 @@ let fullscreenImg = null;
     <meta name="twitter:card" content="summary_large_image" />
     {
       content?.title ? (
-        <meta name="twitter:title" content={content?.title} />
+        <meta name="twitter:title" content={content?.seo?.metaTitle ? content?.seo?.metaTitle : content?.title} />
       ) : (
         ""
       )
@@ -414,7 +441,7 @@ let fullscreenImg = null;
     }
     <!-- structured data -->
     {structuredData && (
-      <script type="application/ld+json" set:html={structuredData}></script>
+      <script is:inline type="application/ld+json" set:html={structuredData}></script>
     )}
         <!-- end of structured data -->
   </head>
@@ -452,7 +479,7 @@ let fullscreenImg = null;
         } else if (section?.type === "video") {
           return <Video content={content} section={section} />;
         } else if (section?.type === "gallery") {
-          return <Gallery section={section} />;
+          return <Gallery section={section} content={content} />;
         } else if (section?.type === "modal") {
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {
@@ -464,7 +491,7 @@ let fullscreenImg = null;
         } else if (section?.type === "reviews") {
           return <Reviews  section={section} />;
         } else if (section?.type === "googleReviewsSlider") {
-          return <GoogleReviewsSlider section={section} />;
+          return <GoogleReviewsSlider section={section} content={content} />;
         } else if (section?.type === "codeInsert") {
           return <CodeInsert section={section} />;
         }else if (section?.type === "privacy") {
@@ -563,7 +590,7 @@ let fullscreenImg = null;
   sendFeedbackButton?.addEventListener("click", openFeedbackModal);
 </script>  -->
 <!-- end of feedback modal -->
-<script src="https://accessibility-app-sienna.pages.dev/dist/sienna.min.js" defer></script>
+<script is:inline src="https://accessibility-app-sienna.pages.dev/dist/sienna.min.js" defer></script>
 
   </body>
 </html>

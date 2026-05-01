@@ -6,6 +6,9 @@ const { content } = Astro.props;
   <div class="mx-auto max-w-6xl lg:px-8">
     <div class="bg-white px-6 py-16 sm:py-32 lg:px-8">
       <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+        <a href="/" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4">
+          {content?.locale === "zh_CN" ? "← 返回主頁" : "← Back to Home"}
+        </a>
         <h1
           class="mt-2 text-3xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl"
         >

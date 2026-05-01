@@ -82,10 +82,12 @@ function generateSiteMap() {
   function generateSitemap() {
     const currentDate = getCurrentDate();
     const pagesDir = path.join(process.cwd(), "website", "pages");
-    const pages = getAllPages(pagesDir).map((url) => ({
-      url,
-      lastmod: currentDate,
-    }));
+    const pages = getAllPages(pagesDir)
+      .filter((url) => !url.startsWith("/zh-cn"))
+      .map((url) => ({
+        url,
+        lastmod: currentDate,
+      }));
 
     const galleryFolders = [
       "gallery",

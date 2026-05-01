@@ -5,15 +5,6 @@ import {sitemapConfig} from "../../../sitemap.config.js"
 function generateRobots() {
   if (!sitemapConfig?.site) return;
 
-  // To get the current date and format it as YYYY-MM-DD
-  function getCurrentDate() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
-
   // generate all page paths
   function getAllPages(directory) {
     const pagePaths = [];
