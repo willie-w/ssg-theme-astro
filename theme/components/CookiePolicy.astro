@@ -1,0 +1,114 @@
+---
+const { content } = Astro.props;
+---
+
+<div class="bg-white py-12">
+  <div class="mx-auto max-w-6xl lg:px-8">
+    <div class="bg-white px-6 py-16 sm:py-32 lg:px-8">
+      <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+        <a href="/" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4">
+          ← Back to Home
+        </a>
+        <h1
+          class="mt-2 text-3xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl"
+        >
+          Cookie Policy
+        </h1>
+        <p class="mt-6">This policy is effective as of {content?.creationDate || "December 2, 2024"}.</p>
+        <p class="mt-2">Last updated: {content?.creationDate || "December 2, 2024"}</p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          What Are Cookies
+        </h2>
+        <p class="mt-6">
+          Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work efficiently and to provide information to website owners.
+        </p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          How We Use Cookies
+        </h2>
+        <p class="mt-6">
+          {content?.title} uses cookies and similar tracking technologies to improve your browsing experience and understand how visitors use our website. We use Google Tag Manager to manage our tracking and analytics tools.
+        </p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Types of Cookies We Use
+        </h2>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">Analytics Cookies</h3>
+        <p class="mt-6">
+          We use Google Analytics to understand how visitors interact with our website. These cookies collect information such as pages visited, time spent on each page, and how you arrived at our site.
+        </p>
+        <p class="mt-4">The analytics cookies we use include:</p>
+        <ul class="list-disc list-inside mt-4 space-y-2">
+          <li><strong>_ga</strong> — Distinguishes unique users. Expires after 2 years.</li>
+          <li><strong>_ga_*</strong> — Persists session state for Google Analytics. Expires after 2 years.</li>
+        </ul>
+        <p class="mt-6">
+          You can opt out of Google Analytics tracking by installing the
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            class="text-blue-600 hover:text-blue-800"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Google Analytics Opt-out Browser Add-on</a>.
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">Essential Cookies</h3>
+        <p class="mt-6">
+          Some cookies are strictly necessary for the website to function. They cannot be switched off in our systems and do not collect any personal information.
+        </p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Third-Party Services
+        </h2>
+        <p class="mt-6">
+          We use the following third-party services that may place cookies on your device:
+        </p>
+        <ul class="list-disc list-inside mt-4 space-y-2">
+          <li>Google Tag Manager</li>
+          <li>Google Analytics</li>
+        </ul>
+        <p class="mt-6">
+          These services are governed by their own privacy policies. We recommend reviewing Google's Privacy Policy for more information on how Google uses cookies.
+        </p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Managing Cookies
+        </h2>
+        <p class="mt-6">
+          Most web browsers allow you to control cookies through their settings. You can set your browser to refuse cookies or to alert you when cookies are being sent. However, disabling cookies may affect the functionality of this website.
+        </p>
+        <p class="mt-6">
+          To learn how to manage cookies, visit the help section of your browser:
+        </p>
+        <ul class="list-disc list-inside mt-4 space-y-2">
+          <li>Google Chrome: Settings → Privacy and security → Cookies and other site data</li>
+          <li>Mozilla Firefox: Options → Privacy &amp; Security → Cookies and Site Data</li>
+          <li>Safari: Preferences → Privacy → Manage Website Data</li>
+          <li>Microsoft Edge: Settings → Cookies and site permissions</li>
+        </ul>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Changes to This Cookie Policy
+        </h2>
+        <p class="mt-6">
+          We may update this Cookie Policy from time to time to reflect changes in technology, legislation, or our practices. Any updates will be posted on this page with a revised effective date.
+        </p>
+
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Contact Us
+        </h2>
+        <p class="mt-6">
+          If you have any questions about our use of cookies, please contact us:
+        </p>
+        <div class="mt-6">
+          <p class="mt-2">{content?.title}</p>
+          {content?.tel && <p class="mt-2">{"Tel: " + content.tel}</p>}
+          {content?.email && <p class="mt-2">{"Email: " + content.email}</p>}
+          {content?.address && <p class="mt-2">{"Address: " + content.address}</p>}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

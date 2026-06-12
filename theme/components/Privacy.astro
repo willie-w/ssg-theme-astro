@@ -57,9 +57,9 @@ const { content } = Astro.props;
           apply to any of your activities after you leave our site.
         </p>
         <!-- 6 -->
-        <p class="mt-6">This policy is effective as of December 2, 2024.</p>
+        <p class="mt-6">This policy is effective as of {content?.creationDate || "December 2, 2024"}.</p>
         <!-- 7 -->
-        <p class="mt-2">Last updated: December 2, 2024</p>
+        <p class="mt-2">Last updated: {content?.creationDate || "December 2, 2024"}</p>
 
         <!-- Information We Collect -->
 

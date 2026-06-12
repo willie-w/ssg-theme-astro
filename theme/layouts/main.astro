@@ -13,6 +13,7 @@ import GoogleForm from "../components/GoogleForm.astro";
 import Privacy from "../components/Privacy.astro";
 import Terms from "../components/Terms.astro";
 import Accessibility from "../components/Accessibility.astro";
+import CookiePolicy from "../components/CookiePolicy.astro";
 import Reviews from "../components/Reviews.astro";
 import GoogleReviewsSlider from "../components/GoogleReviewsSlider.astro";
 import "../style/global.css";
@@ -501,6 +502,8 @@ let fullscreenImg = null;
           return <Terms section={section} content={content} />;
         }else if (section?.type === "accessibility") {
           return <Accessibility section={section} content={content} />;
+        }else if (section?.type === "cookiePolicy") {
+          return <CookiePolicy section={section} content={content} />;
         }
       })
     }
