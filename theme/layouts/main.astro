@@ -598,40 +598,71 @@ let fullscreenImg = null;
 
 <!-- Cookie Banner -->
 <style>
-  #cookie-banner { display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1f2937;color:#f9fafb;font-size:0.875rem;padding:1rem 1.5rem 1.5rem; }
-  @media (max-width:639px) { .asw-menu-btn { left:auto!important;right:1rem!important; } }
-  #cookie-banner p { margin:0 0 0.75rem; }
+  #cookie-banner { display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1f2937;color:#f9fafb;font-size:0.875rem; }
+  #cookie-banner p { margin:0; }
   #cookie-banner-btn-wrap { display:flex;justify-content:flex-end; }
-  #cookie-accept { background:#e9882e;color:#fff;border:none;border-radius:0.375rem;cursor:pointer;white-space:nowrap;padding:0.35rem 0.9rem;font-size:0.8rem; }
+  #cookie-accept { background:#e9882e;color:#fff;border:none;border-radius:0.375rem;cursor:pointer;white-space:nowrap; }
+  @media (max-width:639px) {
+    #cookie-banner { bottom:0;padding:0.75rem 1rem;border-radius:0;align-items:center;gap:0.75rem; }
+    #cookie-banner p { flex:1;order:0; }
+    #cookie-banner-btn-wrap { order:1; }
+    #cookie-accept { padding:0.25rem 0.75rem;font-size:0.75rem; }
+    .asw-menu-btn { left:1rem!important;right:auto!important; }
+  }
   @media (min-width:640px) {
-    #cookie-banner { display:none;flex-direction:row;align-items:center;padding:0.875rem 2rem 0.875rem 4.5rem; }
-    #cookie-banner p { margin:0;flex:1; }
-    #cookie-banner-btn-wrap { margin-left:3rem; }
+    #cookie-banner { flex-direction:row;align-items:center;padding:0.875rem 2rem 0.875rem 4.5rem; }
+    #cookie-banner p { flex:1;order:0; }
+    #cookie-banner-btn-wrap { margin-left:3rem;order:1; }
     #cookie-accept { padding:0.5rem 1.5rem;font-size:0.875rem; }
   }
 </style>
 <div id="cookie-banner">
+  <div id="cookie-banner-btn-wrap">
+    <button id="cookie-accept">Got it</button>
+  </div>
   <p>
     We use cookies (including Google Analytics) to improve your experience.
     By continuing to use this site, you agree to our <a href="/cookie-policy" style="color:#fdba74;text-decoration:underline;">Cookie Policy</a>.
   </p>
-  <div id="cookie-banner-btn-wrap">
-    <button id="cookie-accept">Got it</button>
-  </div>
 </div>
 <script is:inline>
   (function () {
     var banner = document.getElementById('cookie-banner');
     if (!banner) return;
+
+    function updateWidgetPos() {
+      if (window.innerWidth >= 640) return;
+      var btn = document.querySelector('.asw-menu-btn');
+      if (!btn) return;
+      if (banner.style.display !== 'none') {
+        btn.style.setProperty('bottom', (banner.offsetHeight + 8) + 'px', 'important');
+      } else {
+        btn.style.removeProperty('bottom');
+      }
+    }
+
+    function waitForWidget() {
+      if (document.querySelector('.asw-menu-btn')) {
+        updateWidgetPos();
+      } else {
+        requestAnimationFrame(waitForWidget);
+      }
+    }
+
     if (localStorage.getItem('cookie-consent') === 'accepted') {
       banner.style.display = 'none';
     } else {
       banner.style.display = 'flex';
+      waitForWidget();
     }
+
     document.getElementById('cookie-accept').addEventListener('click', function () {
       localStorage.setItem('cookie-consent', 'accepted');
       banner.style.display = 'none';
+      updateWidgetPos();
     });
+
+    window.addEventListener('resize', updateWidgetPos);
   })();
 </script>
 <!-- End Cookie Banner -->
