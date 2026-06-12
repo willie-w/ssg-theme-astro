@@ -595,5 +595,30 @@ let fullscreenImg = null;
 <!-- end of feedback modal -->
 <script is:inline src="https://accessibility-app-sienna.pages.dev/dist/sienna.min.js" defer></script>
 
+<!-- Cookie Banner -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1f2937;color:#f9fafb;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:0.875rem;">
+  <p style="margin:0;">
+    We use cookies (including Google Analytics) to improve your experience.
+    By continuing to use this site, you agree to our <a href="/cookie-policy" style="color:#fdba74;text-decoration:underline;">Cookie Policy</a>.
+  </p>
+  <button id="cookie-accept" style="background:#e9882e;color:#fff;border:none;border-radius:0.375rem;padding:0.5rem 1.25rem;cursor:pointer;font-size:0.875rem;white-space:nowrap;">Got it</button>
+</div>
+<script is:inline>
+  (function () {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    if (localStorage.getItem('cookie-consent') === 'accepted') {
+      banner.style.display = 'none';
+    } else {
+      banner.style.display = 'flex';
+    }
+    document.getElementById('cookie-accept').addEventListener('click', function () {
+      localStorage.setItem('cookie-consent', 'accepted');
+      banner.style.display = 'none';
+    });
+  })();
+</script>
+<!-- End Cookie Banner -->
+
   </body>
 </html>
