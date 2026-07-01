@@ -1,4 +1,5 @@
 ---
+import PrimaryButton from "./ui/PrimaryButton.astro";
 import { cn } from "../utils/cn";
 
 type GoogleReview = {
@@ -7,7 +8,7 @@ type GoogleReview = {
   body: string;
 };
 
-const { section } = Astro.props;
+const { section, content } = Astro.props;
 
 const getRandomColor = () => {
   const colors = [
@@ -42,28 +43,27 @@ const getInitial = (name: string) => {
 
 <section
   id={`${section?.id || ""}`}
-  class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
+  class={cn(
+    section?.paddingTop || (section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32"),
+    section?.paddingBottom || ""
+  )}
 >
   <div style={`background-color:${section?.bgColor}`}>
     <div class="mx-auto max-w-7xl px-2 lg:px-8">
       <div class="mx-auto max-w-2xl">
         <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
           {
-            section?.title?.map((line: string, index: number) => (
-              <Fragment key={index}>
-                <span class="block leading-16">{line}</span>
-              </Fragment>
+            section?.title?.map((line: string) => (
+              <span class="block leading-16">{line}</span>
             ))
           }
         </h2>
 
         {
-          section?.description?.map((info: string, index: number) => (
-            <Fragment key={index}>
-              <p class="mt-4 text-lg leading-8 text-gray-600 text-center">
-                {info}
-              </p>
-            </Fragment>
+          section?.description?.map((info: string) => (
+            <p class="mt-4 text-lg leading-8 text-gray-600 text-center">
+              {info}
+            </p>
           ))
         }
       </div>
@@ -81,10 +81,10 @@ const getInitial = (name: string) => {
           <div class="reviews-slider-track flex gap-6 pb-4">
             {
               section?.items?.map((review: GoogleReview, index: number) => (
-                <div
-                  key={index}
-                  class="reviews-slider-item flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] "
-                >
+                <Fragment key={index}>
+                  <div
+                    class="reviews-slider-item flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] "
+                  >
                   <div class="h-full rounded-2xl bg-gray-50 p-6 sm:p-8 flex flex-col">
                     <!-- Star Rating -->
                     {review?.rating && (
@@ -95,25 +95,25 @@ const getInitial = (name: string) => {
                       >
                         <div class="flex items-center gap-1">
                           {Array.from({ length: 5 }, (_, starIndex) => (
-                            <svg
-                              key={starIndex}
-                              class={cn(
-                                starIndex < review.rating
-                                  ? "text-yellow-400"
-                                  : "text-gray-300",
-                                "size-5 shrink-0"
-                              )}
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              class="icon icon-tabler icons-tabler-filled icon-tabler-star"
-                            >
+                            <Fragment key={starIndex}>
+                              <svg
+                                class={cn(
+                                  starIndex < review.rating
+                                    ? "text-yellow-400"
+                                    : "text-gray-300",
+                                  "size-5 shrink-0 icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                )}
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                              >
                               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                               <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
                             </svg>
+                              </Fragment>
                           ))}
                         </div>
                       </div>
@@ -154,6 +154,7 @@ const getInitial = (name: string) => {
                     </div>
                   </div>
                 </div>
+              </Fragment>
               ))
             }
           </div>
@@ -203,15 +204,28 @@ const getInitial = (name: string) => {
       <div class="flex justify-center gap-2 mt-8">
         {
           section?.items?.map((_: GoogleReview, index: number) => (
-            <button
-              key={index}
-              class="reviews-slider-dot w-2 h-2 rounded-full bg-gray-300 transition-all hover:bg-gray-600 cursor-pointer"
-              data-slide={index}
-              aria-label={`Go to review ${index + 1}`}
-            />
+            <Fragment key={index}>
+              <button
+                class="reviews-slider-dot w-2 h-2 rounded-full bg-gray-300 transition-all hover:bg-gray-600 cursor-pointer"
+                data-slide={index}
+                aria-label={`Go to review ${index + 1}`}
+              />
+            </Fragment>
           ))
         }
       </div>
+
+      {
+        section?.buttonText && section?.buttonHref ? (
+          <div class="mt-8 flex justify-center">
+            <PrimaryButton
+              content={content}
+              text={section.buttonText}
+              href={section.buttonHref}
+            />
+          </div>
+        ) : null
+      }
     </div>
   </div>
 </section>
@@ -244,14 +258,15 @@ const getInitial = (name: string) => {
       const nextBtn = slider
         .closest(".relative")
         ?.querySelector(".reviews-slider-next");
-      const track = slider.querySelector(".reviews-slider-track");
+      const track = slider.querySelector(".reviews-slider-track") as HTMLElement | null;
       const dots = slider
         .closest("section")
         ?.querySelectorAll(".reviews-slider-dot");
 
       if (!track) return;
 
-      const itemWidth = track.querySelector(".reviews-slider-item")?.offsetWidth;
+      const firstItem = track.querySelector(".reviews-slider-item");
+      const itemWidth = firstItem instanceof HTMLElement ? firstItem.offsetWidth : 0;
       const gap = 24; // 6 * 4 (from gap-6 which is 1.5rem = 24px)
       let currentIndex = 0;
 

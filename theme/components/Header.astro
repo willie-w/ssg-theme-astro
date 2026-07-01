@@ -150,7 +150,7 @@ const { content } = Astro.props;
           )
         }
         {
-          content?.header?.addTableReservationBtn && (
+          content?.header?.addTableReservationBtn ? (
             <OrderOnlineBtn
               content={content}
               text={
@@ -161,6 +161,8 @@ const { content } = Astro.props;
               dataGlfRuid={content?.ruid}
               isReservation
             />
+          ) : (
+            ""
           )
         }
         {
@@ -196,7 +198,6 @@ const { content } = Astro.props;
             ""
           )
         }
-
         {
           content?.header?.addTelBtn ? (
             <a
@@ -283,7 +284,7 @@ const { content } = Astro.props;
               )
             }
             {
-              content?.header?.addTableReservationBtn && (
+              content?.header?.addTableReservationBtn ? (
                 <OrderOnlineBtn
                   content={content}
                   text={
@@ -294,6 +295,8 @@ const { content } = Astro.props;
                   dataGlfRuid={content?.ruid}
                   isReservation
                 />
+              ) : (
+                ""
               )
             }
             {

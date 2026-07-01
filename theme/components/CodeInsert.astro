@@ -12,7 +12,7 @@ const { section } = Astro.props;
               src={code?.content?.replace('src="', "")?.replace('"', "")}
             />
           ) : code.type === "inlineScript" ? (
-            <script set:html={code?.content} />
+            <script is:inline set:html={code?.content} />
           ) : code.type === "html" ? (
             <Fragment set:html={code?.content} />
           ) : null}
