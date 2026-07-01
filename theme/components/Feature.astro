@@ -310,7 +310,27 @@ function hexToRgb(hex:string) {
             )}
             style={`${section?.type !== "hero" ? "" : "padding-top:56px"} `}
           >
-            {section?.bannerImg ? (
+            {section?.bannerImgs?.length > 0 ? (
+              <div
+                class={cn(
+                  "lg:flex-grow relative overflow-hidden aspect-[3/2] drop-shadow-xl",
+                  section?.imgRounded ? `rounded-${section?.imgRounded}` : "rounded-lg"
+                )}
+                data-carousel
+              >
+                {section.bannerImgs.map((img: string, i: number) => (
+                  <img
+                    src={`/${img}`}
+                    class={cn(
+                      "absolute inset-0 w-full h-full object-cover transition-opacity duration-700",
+                      i === 0 ? "opacity-100" : "opacity-0"
+                    )}
+                    alt={content?.title}
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                ))}
+              </div>
+            ) : section?.bannerImg ? (
               <div class="lg:flex-grow">
                 <img
                   src={`/${section?.bannerImg}`}
@@ -557,6 +577,21 @@ function hexToRgb(hex:string) {
   </div>
 </section>
 <script>
+  document.querySelectorAll('[data-carousel]').forEach(el => {
+    const slides = Array.from(el.querySelectorAll('img'));
+    if (slides.length < 2) return;
+    let cur = 0;
+    setInterval(() => {
+      slides[cur].classList.remove('opacity-100');
+      slides[cur].classList.add('opacity-0');
+      cur = (cur + 1) % slides.length;
+      slides[cur].classList.remove('opacity-0');
+      slides[cur].classList.add('opacity-100');
+    }, 4000);
+  });
+</script>
+
+<script>
   // Function to mute the video
   function muteGJWVideo() {
     const iframe = document.getElementById("gjw-video") as HTMLIFrameElement;
@@ -570,7 +605,10 @@ function hexToRgb(hex:string) {
   }
 
   // Call the function after the iframe has loaded
-  document.getElementById("gjw-video")!.onload = function () {
-    muteGJWVideo();
-  };
+  const gjwVideoEl = document.getElementById("gjw-video") as HTMLIFrameElement | null;
+  if (gjwVideoEl) {
+    gjwVideoEl.onload = function () {
+      muteGJWVideo();
+    };
+  }
 </script>

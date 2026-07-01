@@ -2,7 +2,7 @@
 import { getImagesFromFolders } from "../utils/readImages";
 import { cn } from "../utils/cn";
 
-const { section } = Astro.props;
+const { content, section } = Astro.props;
 const images = getImagesFromFolders("/public/" + section?.folderPath);
 const galleryGridId = `gallery-grid-${String(
   section?.id || section?.folderPath || "default"
@@ -376,14 +376,39 @@ const initialVisibleDesktop = parseVisibleCount(
           </ul>
 
           {images?.length > Math.min(initialVisibleMobile, initialVisibleDesktop) && (
-            <div class="flex justify-center mt-12">
-              <button
-                type="button"
-                class="gallery-expand-btn px-8 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
-                data-gallery-target={galleryGridId}
-              >
-                View More
-              </button>
+            <div class="flex justify-center mt-12 mb-12 sm:mb-16">
+              {section?.viewMoreLink ? (
+                <a
+                  href={section.viewMoreLink}
+                  class={cn(
+                    "gallery-expand-btn px-8 py-3 font-semibold rounded-lg",
+                    section?.viewMoreBgColor
+                      ? "hover:scale-105 transition-transform"
+                      : "bg-gray-900 text-white hover:bg-gray-800 transition-colors"
+                  )}
+                  style={section?.viewMoreBgColor
+                    ? `background-color:${section.viewMoreBgColor}; color:${section?.viewMoreTextColor || "#ffffff"};`
+                    : undefined}
+                >
+                  {section?.viewMoreText || "View More"}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  class={cn(
+                    "gallery-expand-btn px-8 py-3 font-semibold rounded-lg",
+                    section?.viewMoreBgColor
+                      ? "hover:scale-105 transition-transform"
+                      : "bg-gray-900 text-white hover:bg-gray-800 transition-colors"
+                  )}
+                  style={section?.viewMoreBgColor
+                    ? `background-color:${section.viewMoreBgColor}; color:${section?.viewMoreTextColor || "#ffffff"};`
+                    : undefined}
+                  data-gallery-target={galleryGridId}
+                >
+                  {section?.viewMoreText || "View More"}
+                </button>
+              )}
             </div>
           )}
         </div>

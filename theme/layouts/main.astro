@@ -321,6 +321,10 @@ let fullscreenImg = null;
     <!-- end of modal -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {
       content?.seo?.metaTitle ? (
@@ -390,7 +394,7 @@ let fullscreenImg = null;
     <meta name="twitter:card" content="summary_large_image" />
     {
       content?.title ? (
-        <meta name="twitter:title" content={content?.title} />
+        <meta name="twitter:title" content={content?.seo?.metaTitle?content?.seo?.metaTitle:content?.title} />
       ) : (
         ""
       )
@@ -452,7 +456,7 @@ let fullscreenImg = null;
         } else if (section?.type === "video") {
           return <Video content={content} section={section} />;
         } else if (section?.type === "gallery") {
-          return <Gallery section={section} />;
+          return <Gallery content={content} section={section} />;
         } else if (section?.type === "modal") {
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {

@@ -54,7 +54,7 @@ function generateSiteMap() {
         const folderImages = fileNames
           .filter((fileName) => fileName !== ".DS_Store")
           .map((fileName) => ({
-            src: `${sitemapConfig.site}/${folder}/${fileName}`,
+            src: `${sitemapConfig.site}/${folder}/${encodeURIComponent(fileName)}`,
             name: formatFileName(fileName), // generate file name
           }));
         images = images.concat(folderImages);

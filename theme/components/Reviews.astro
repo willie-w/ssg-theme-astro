@@ -1,6 +1,7 @@
 ---
-import { cn } from "../utils/cn";
-import PrimaryButton from "./ui/PrimaryButton.astro";
+import { cn } from '../utils/cn';
+import PrimaryButton from './ui/PrimaryButton.astro';
+import ReviewCard from './ReviewCard.astro';
 
 type TestimonialsData = {
   author: { handle: string; imageUrl: string | null | undefined; name: string };
@@ -8,49 +9,26 @@ type TestimonialsData = {
   body: string;
 };
 const { section } = Astro.props;
-const getRandomColor = () => {
-  const colors = [
-    "bg-red-700",
-    "bg-blue-700",
-    "bg-green-700",
-    "bg-yellow-700",
-    "bg-purple-700",
-    "bg-pink-700",
-    "bg-orange-700",
-    "bg-teal-700",
-    "bg-indigo-700",
-    "bg-lime-700",
-    "bg-cyan-700",
-    "bg-amber-700",
-    "bg-rose-700",
-    "bg-fuchsia-700",
-    "bg-emerald-700",
-    "bg-sky-700",
-    "bg-violet-700",
-    "bg-stone-700",
-    "bg-gray-700",
-    "bg-zinc-700",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
-const getInitial = (name: string) => {
-  return name ? name.charAt(0).toUpperCase() : "?";
-};
+const items: TestimonialsData[] = section?.items || [];
+const mobileSlides: TestimonialsData[] = items.length > 1 ? [...items, items[0]] : items;
 ---
 
 <section
-  id={`${section?.id || ""}`}
-  class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
+  id={section?.id || ''}
+  class={cn(
+    section?.noMarginTop
+      ? (section?.noMarginTopMobileOnly ? 'pt-0 sm:pt-16 md:pt-24' : 'pt-0')
+      : 'pt-16 sm:pt-24 md:pt-32'
+  )}
 >
-  <div style={`background-color:${section?.bgColor}`}>
-    <div class="mx-auto max-w-7xl px-2 lg:px-8">
-      <div class="mx-auto max-w-2xl">
-        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
+  <div style={'background-color:' + section?.bgColor}>
+    <div class='mx-auto max-w-7xl px-2 lg:px-8'>
+      <div class='mx-auto max-w-2xl'>
+        <h2 class='text-3xl font-bold text-gray-900 sm:text-4xl text-center'>
           {
             section?.title?.map((line: string, index: number) => (
               <Fragment key={index}>
-                <span class="block leading-16">{line}</span>
+                <span class='block leading-16'>{line}</span>
               </Fragment>
             ))
           }
@@ -59,7 +37,7 @@ const getInitial = (name: string) => {
         {
           section?.description?.map((info: string, index: number) => (
             <Fragment key={index}>
-              <p class="mt-4 text-lg leading-8 text-gray-600 text-center">
+              <p class='mt-4 text-lg leading-8 text-gray-600 text-center'>
                 {info}
               </p>
             </Fragment>
@@ -67,92 +45,102 @@ const getInitial = (name: string) => {
         }
       </div>
 
-      <div class="mx-auto max-w-7xl px-2 lg:px-8 md:columns-3">
-        {
-          section?.items?.map((testimonial: TestimonialsData) => (
-            <Fragment key={testimonial?.body}>
-              <div
-                class={cn(
-                  "pt-8 sm:inline-block sm:w-full sm:px-4",
-                  section?.classes?.body
-                )}
-              >
-                <figure class="rounded-2xl bg-gray-50 p-4 sm:p-8 text-lg/6">
-                  {testimonial?.body && (
-                    <blockquote class="text-gray-900">
-                      <p>{`“${testimonial?.body}”`}</p>
-                    </blockquote>
-                  )}
-                  <div class="mt-6 flex items-center gap-x-4">
-                    <div
-                      class={`size-10 rounded-full flex items-center justify-center ${getRandomColor()}`}
-                    >
-                      <span class="text-white text-lg font-bold">
-                        {getInitial(testimonial?.author?.name)}
-                      </span>
+      {
+        section?.mobileAutoSlide ? (
+          <>
+            <div class='hidden md:grid mx-auto max-w-7xl px-2 lg:px-8 gap-6 md:grid-cols-3 items-start'>
+              {
+                items.map((testimonial: TestimonialsData) => (
+                  <Fragment key={testimonial?.body}>
+                    <div class={cn('pt-8', section?.classes?.body)}>
+                      <ReviewCard testimonial={testimonial} />
                     </div>
+                  </Fragment>
+                ))
+              }
+            </div>
 
-                    <div>
-                      {testimonial?.author?.name && (
-                        <div class="font-semibold text-gray-900">
-                          {testimonial?.author?.name}
+            <div class='md:hidden overflow-hidden' data-review-slider>
+              <div class='flex' data-review-slider-track style='transition: transform 500ms ease;'>
+                {
+                  mobileSlides.map((testimonial: TestimonialsData, index: number) => (
+                    <Fragment key={index}>
+                      <div class='w-full shrink-0 px-1'>
+                        <div class={cn('pt-8', section?.classes?.body)}>
+                          <ReviewCard testimonial={testimonial} />
                         </div>
-                      )}
-                      {testimonial?.author?.handle && (
-                        <div class="text-gray-600">{`@${testimonial?.author?.handle}`}</div>
-                      )}
-                      {testimonial?.rating?.rating && (
-                        <div
-                          role="img"
-                          aria-label={` ${testimonial.rating.rating} out of ${testimonial.rating.maxStars || 5} stars`}
-                        >
-                          <div class="flex items-center mt-1">
-                            {Array.from(
-                              {
-                                length: testimonial?.rating?.maxStars || 5,
-                              },
-                              (_, index) => (
-                                <Fragment key={index}>
-                                  <svg
-                                    class={cn(
-                                      index < testimonial.rating.rating
-                                        ? "text-yellow-400"
-                                        : "text-gray-300",
-                                      "size-4.5 shrink-0"
-                                    )}
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    class="icon icon-tabler icons-tabler-filled icon-tabler-star"
-                                  >
-                                    <path
-                                      stroke="none"
-                                      d="M0 0h24v24H0z"
-                                      fill="none"
-                                    />
-                                    <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
-                                  </svg>
-                                </Fragment>
-                              )
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </figure>
+                      </div>
+                    </Fragment>
+                  ))
+                }
               </div>
-            </Fragment>
-          ))
-        }
-      </div>
+            </div>
+          </>
+        ) : (
+          <div class='mx-auto max-w-7xl px-2 lg:px-8 grid gap-6 md:grid-cols-3 items-start'>
+            {
+              items.map((testimonial: TestimonialsData) => (
+                <Fragment key={testimonial?.body}>
+                  <div class={cn('pt-8', section?.classes?.body)}>
+                    <ReviewCard testimonial={testimonial} />
+                  </div>
+                </Fragment>
+              ))
+            }
+          </div>
+        )
+      }
     </div>
   </div>
-  <div class="text-center mt-6">
-    <PrimaryButton text={`${section?.buttonText}`} href={section?.href} />
+  <div class='text-center mt-6'>
+    <PrimaryButton text={section?.buttonText || ''} href={section?.href}>
+      <svg slot='icon' class='size-5 shrink-0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+        <path fill='#4285F4' d='M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v2.98h3.86c2.26-2.09 3.56-5.17 3.56-8.8z' />
+        <path fill='#34A853' d='M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-2.98c-1.07.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z' />
+        <path fill='#FBBC05' d='M5.27 14.31A7.19 7.19 0 0 1 4.9 12c0-.8.14-1.58.37-2.31V6.6H1.29A11.94 11.94 0 0 0 0 12c0 1.92.46 3.74 1.29 5.4z' />
+        <path fill='#EA4335' d='M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.6l3.98 3.09c.95-2.85 3.6-4.94 6.73-4.94z' />
+      </svg>
+    </PrimaryButton>
   </div>
   <div></div>
 </section>
+
+<script>
+  document.querySelectorAll('.review-body').forEach(el => {
+    el.addEventListener('click', (e) => {
+      (e.currentTarget as HTMLElement).classList.toggle('line-clamp-4');
+    });
+  });
+</script>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-review-slider]').forEach((el) => {
+    const track = el.querySelector<HTMLElement>('[data-review-slider-track]');
+    if (!track) return;
+    const slideCount = track.children.length;
+    const realCount = slideCount > 1 ? slideCount - 1 : slideCount;
+    if (realCount < 2) return;
+
+    let index = 0;
+    const goTo = (i: number, animate = true) => {
+      track.style.transition = animate ? 'transform 500ms ease' : 'none';
+      track.style.transform = `translateX(-${i * 100}%)`;
+    };
+
+    setInterval(() => {
+      index++;
+      goTo(index);
+      if (index === realCount) {
+        track.addEventListener(
+          'transitionend',
+          function handler() {
+            track.removeEventListener('transitionend', handler);
+            index = 0;
+            goTo(0, false);
+          },
+          { once: true }
+        );
+      }
+    }, 4000);
+  });
+</script>
