@@ -598,17 +598,22 @@ function hexToRgb(hex:string) {
   </div>
 </section>
 <script>
-  document.querySelectorAll('[data-carousel]').forEach(el => {
+  document.querySelectorAll('[data-carousel]').forEach((el, index) => {
     const slides = Array.from(el.querySelectorAll('img'));
     if (slides.length < 2) return;
     let cur = 0;
-    setInterval(() => {
+    const advance = () => {
       slides[cur].classList.remove('opacity-100');
       slides[cur].classList.add('opacity-0');
       cur = (cur + 1) % slides.length;
       slides[cur].classList.remove('opacity-0');
       slides[cur].classList.add('opacity-100');
-    }, 4000);
+    };
+    // Stagger each carousel's start so multiple carousels on the same page
+    // don't all switch images at the exact same moment.
+    setTimeout(() => {
+      setInterval(advance, 4000);
+    }, index * 2000);
   });
 </script>
 
